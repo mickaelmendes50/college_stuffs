@@ -6,7 +6,7 @@
 - Algoritmos e Estruturas de dados
 - Curso básico de Java (Udemy)
 - Programação Orientada a Objetos
-- Curso básico de React + Redux (Udemy)
+- Curso básico de ReactJS + Redux (Udemy)
 
 ## Convenção de nomeação de Campos em Java
 
