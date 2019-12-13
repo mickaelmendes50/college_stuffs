@@ -7,6 +7,7 @@
 - Curso básico de Java (Udemy)
 - Programação Orientada a Objetos
 - Curso básico de ReactJS + Redux (Udemy)
+- Curso de JavaScript Ninja (Udemy)
 
 ## Convenção de nomeação de Campos em Java
 
