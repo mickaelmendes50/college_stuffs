@@ -1,0 +1,11 @@
+# Arquivos do VS Code
+.vs/
+.vscode/
+
+# Arquivos compilados
+*.exe
+*.o
+*.out
+
+# Output do trabalho final
+trabalho-final/class/
