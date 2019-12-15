@@ -1,8 +1,22 @@
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.NotSerializableException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 public class ProgramaTrainee {
+    private static final String OUT_FILE = "trainees.txt";
+    private Universidade universidade;
 
     //
     //  Menus de inicialização
@@ -47,12 +61,37 @@ public class ProgramaTrainee {
     //
     // Operacoes
     //
-    public static void inclusao(int topic) {
+    public static void inclusao(int topic) throws IOException, NotSerializableException, FileNotFoundException, ClassNotFoundException {
         ArrayList<Universidade> universidades = new ArrayList<Universidade>();
+        boolean cont = true;
+
+        try {
+            FileInputStream f = new FileInputStream(OUT_FILE);
+            try {
+                ObjectInputStream s = new ObjectInputStream(f);
+                while (cont) {
+                    Universidade uni = (Universidade)s.readObject();
+                    if(uni != null) {
+                        universidades.add(uni);
+                    } else {
+                        cont = false;
+                    }
+                }
+                s.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            f.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         if (topic == 1) {
             String universidade = JOptionPane.showInputDialog("Insira o nome da Universidade vinculada");
             boolean achou = false;
+
             for (int i = 0; i < universidades.size(); i++) {
                 if (universidade.equals(universidades.get(i).getNome())) {
                     String curso = JOptionPane.showInputDialog("Insira o nome do Curso vinculado");
@@ -73,7 +112,7 @@ public class ProgramaTrainee {
                 
                 int opt = Integer.parseInt(JOptionPane.showInputDialog(x));
                 if (opt == 1) {
-                    novaUniversidade(universidades);
+                    novaUniversidade();
                 }
             }
         }
@@ -96,35 +135,52 @@ public class ProgramaTrainee {
                 
                 int opt = Integer.parseInt(JOptionPane.showInputDialog(x));
                 if (opt == 1) {
-                    novaUniversidade(universidades);
+                    novaUniversidade();
                 }
             }
         }
 
-        if (topic == 3) novaUniversidade(universidades);
+        if (topic == 3) novaUniversidade();
     }
 
-    public static void novaUniversidade(ArrayList universidades) {
-        String university = "----------------------------------------------------------\n"
-                          + "    Cadastro de Universidade\n"
-                          + "----------------------------------------------------------\n";
-        String nome = JOptionPane.showInputDialog(university + "Insira o nome\n");
-        String endereco = JOptionPane.showInputDialog(university + "Insira o endereco\n");
-        String bairro = JOptionPane.showInputDialog(university + "Insira o bairro\n");
-        String cidade = JOptionPane.showInputDialog(university + "Insira a cidade\n");
-        String estado = JOptionPane.showInputDialog(university + "Insira o estado\n");
+    // Cadastrar uma universidade
+    public static void novaUniversidade() throws IOException, NotSerializableException {
 
-        Universidade novaUniversidade = new Universidade(nome, endereco, bairro, cidade, estado);
+        // Criar um arquivo
+        try {
+            FileOutputStream fx = new FileOutputStream(OUT_FILE);
+            try {
+                ObjectOutputStream sx = new ObjectOutputStream(fx);
 
-        int opt = Integer.parseInt(JOptionPane.showInputDialog("Deseja cadastrar um curso para essa universidade?\n 1 - Sim\n 2 - Nao"));
-        while (opt == 1) {
-            novaUniversidade.novoCurso();
-            opt = Integer.parseInt(JOptionPane.showInputDialog("Deseja cadastrar um novo curso para essa universidade?\n 1 - Sim\n 2 - Nao"));
+                String university = "----------------------------------------------------------\n"
+                                  + "    Cadastro de Universidade\n"
+                                  + "----------------------------------------------------------\n";
+                String nome = JOptionPane.showInputDialog(university + "Insira o nome\n");
+                String endereco = JOptionPane.showInputDialog(university + "Insira o endereco\n");
+                String bairro = JOptionPane.showInputDialog(university + "Insira o bairro\n");
+                String cidade = JOptionPane.showInputDialog(university + "Insira a cidade\n");
+                String estado = JOptionPane.showInputDialog(university + "Insira o estado\n");
+
+                Universidade novaUniversidade = new Universidade(nome, endereco, bairro, cidade, estado);
+
+                int opt = Integer.parseInt(JOptionPane.showInputDialog("Deseja cadastrar um curso para essa universidade?\n 1 - Sim\n 2 - Nao"));
+                while (opt == 1) {
+                    novaUniversidade.novoCurso();
+                    opt = Integer.parseInt(JOptionPane.showInputDialog("Deseja cadastrar um novo curso para essa universidade?\n 1 - Sim\n 2 - Nao"));
+                }
+                sx.writeObject(novaUniversidade);
+
+                sx.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            fx.close();
+        } catch (FileAlreadyExistsException e) {
+            e.printStackTrace();
         }
-        universidades.add(novaUniversidade);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         int option = 5;
         int topic = 5;
 
