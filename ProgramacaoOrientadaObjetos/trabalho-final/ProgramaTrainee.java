@@ -68,11 +68,24 @@ public class ProgramaTrainee {
                     String curso = JOptionPane.showInputDialog("Insira o nome do Curso vinculado");
                     for (int j = 0; i < universidades.get(i).cursos.size(); j++) {
                         if (curso.equals(universidades.get(i).cursos.get(j).getNome())) {
+                            universidades.get(i).cursos.get(j).novoAluno();
                             achou = true;
                             break;
                         }
-                    }              
+                    }
                     if (achou) break;
+
+                    if (!achou) {
+                        String x = "Curso nao encontrado!\n\n"
+                                 + "Deseja cadastra-lo?\n"
+                                 + " 1 - Sim\n"
+                                 + " 2 - Nao\n";
+                        
+                        int opt = Integer.parseInt(JOptionPane.showInputDialog(x));
+                        if (opt == 1) {
+                            topic = 2;
+                        }                        
+                    }
                 }
             }
             if (!achou) {
@@ -83,7 +96,7 @@ public class ProgramaTrainee {
                 
                 int opt = Integer.parseInt(JOptionPane.showInputDialog(x));
                 if (opt == 1) {
-                    novaUniversidade();
+                    topic = 3;
                 }
             }
         }
@@ -106,26 +119,33 @@ public class ProgramaTrainee {
                 
                 int opt = Integer.parseInt(JOptionPane.showInputDialog(x));
                 if (opt == 1) {
-                    novaUniversidade();
+                    topic = 3;
                 }
             }
         }
 
         if (topic == 3) {
             universidades.add(novaUniversidade());
-            System.out.println("Salvei");
+            //System.out.println("Salvei");
             
-            /*try {
-            FileOutputStream fs = new FileOutputStream(OUT_FILE); 
-            ObjectOutputStream os = new ObjectOutputStream(fs);
-            os.writeObject(SalvaUniversidades); //referencia a estrutura que se quer armazenar
-            os.flush();
-            os.close( );
+            try {
+                FileOutputStream fs = new FileOutputStream(OUT_FILE); 
+                ObjectOutputStream os = new ObjectOutputStream(fs);
+
+                os.writeObject(universidades);
+
+                os.flush();
+                os.close( );
     
             } catch(Exception ex){
                 ex.printStackTrace();    
-            }*/
+            }
         }
+    }
+
+    public static void alteracao() {
+
+
     }
 
     // Cadastrar uma universidade
@@ -192,7 +212,7 @@ public class ProgramaTrainee {
                         break;
                     
                     case 2:
-                        inclusao(topic);
+                        alteracao(topic);
                         break;
 
                     case 3:
