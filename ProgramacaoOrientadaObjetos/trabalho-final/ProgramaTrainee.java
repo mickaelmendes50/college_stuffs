@@ -15,22 +15,20 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class ProgramaTrainee {
-    private static final String OUT_FILE = "trainees.txt";
+    private static final String OUT_FILE = "trainees.arq";
     private Universidade universidade;
 
+    static ArrayList<Universidade> universidades = new ArrayList<Universidade>();
+
     //
-    //  Menus de inicialização
+    // Menus de inicialização
     //
     public static int menuInicial() {
         String menuInicial = "----------------------------------------------------------\n"
-                           + "   Sistema de Controle de Trainees \n"
-                           + "----------------------------------------------------------\n\n"
-                           + "Selecione um topico:\n"
-                           + " 1 - Aluno\n"
-                           + " 2 - Curso\n"
-                           + " 3 - Universidade\n"
-                           + " 4 - Busca de Trainee\n"
-                           + " 0 - Sair do programa\n\n";
+                + "   Sistema de Controle de Trainees \n"
+                + "----------------------------------------------------------\n\n" + "Selecione um topico:\n"
+                + " 1 - Aluno\n" + " 2 - Curso\n" + " 3 - Universidade\n" + " 4 - Busca de Trainee\n"
+                + " 0 - Sair do programa\n\n";
 
         int topic = Integer.parseInt(JOptionPane.showInputDialog(menuInicial));
         return topic;
@@ -38,21 +36,19 @@ public class ProgramaTrainee {
 
     public static int menuSecundario(int topic) {
         String topicStr = "";
-        if (topic == 1) topicStr = "Alunos";
-        if (topic == 2) topicStr = "Cursos";
-        if (topic == 3) topicStr = "Universidades";
+        if (topic == 1)
+            topicStr = "Alunos";
+        if (topic == 2)
+            topicStr = "Cursos";
+        if (topic == 3)
+            topicStr = "Universidades";
 
         int option = 5;
 
-        String menuSecundario = "----------------------------------------------------------\n"
-                              + "   Catalogo de " + topicStr + " \n"
-                              + "----------------------------------------------------------\n\n"
-                              + "Escolha uma opcao:\n"
-                              + " 1 - Inclusao\n"
-                              + " 2 - Alteracao\n"
-                              + " 3 - Consulta\n"
-                              + " 4 - Exclusao\n"
-                              + " 0 - Voltar ao menu principal\n\n";       
+        String menuSecundario = "----------------------------------------------------------\n" + "   Catalogo de "
+                + topicStr + " \n" + "----------------------------------------------------------\n\n"
+                + "Escolha uma opcao:\n" + " 1 - Inclusao\n" + " 2 - Alteracao\n" + " 3 - Consulta\n"
+                + " 4 - Exclusao\n" + " 0 - Voltar ao menu principal\n\n";
 
         option = Integer.parseInt(JOptionPane.showInputDialog(menuSecundario));
         return option;
@@ -62,31 +58,6 @@ public class ProgramaTrainee {
     // Operacoes
     //
     public static void inclusao(int topic) throws IOException, NotSerializableException, FileNotFoundException, ClassNotFoundException {
-        ArrayList<Universidade> universidades = new ArrayList<Universidade>();
-        boolean cont = true;
-
-        try {
-            FileInputStream f = new FileInputStream(OUT_FILE);
-            try {
-                ObjectInputStream s = new ObjectInputStream(f);
-                while (cont) {
-                    Universidade uni = (Universidade)s.readObject();
-                    if(uni != null) {
-                        universidades.add(uni);
-                    } else {
-                        cont = false;
-                    }
-                }
-                s.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            f.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
 
         if (topic == 1) {
             String universidade = JOptionPane.showInputDialog("Insira o nome da Universidade vinculada");
@@ -140,44 +111,44 @@ public class ProgramaTrainee {
             }
         }
 
-        if (topic == 3) novaUniversidade();
+        if (topic == 3) {
+            universidades.add(novaUniversidade());
+            System.out.println("Salvei");
+            
+            /*try {
+            FileOutputStream fs = new FileOutputStream(OUT_FILE); 
+            ObjectOutputStream os = new ObjectOutputStream(fs);
+            os.writeObject(SalvaUniversidades); //referencia a estrutura que se quer armazenar
+            os.flush();
+            os.close( );
+    
+            } catch(Exception ex){
+                ex.printStackTrace();    
+            }*/
+        }
     }
 
     // Cadastrar uma universidade
-    public static void novaUniversidade() throws IOException, NotSerializableException {
+    public static Universidade novaUniversidade() throws IOException, NotSerializableException {
 
-        // Criar um arquivo
-        try {
-            FileOutputStream fx = new FileOutputStream(OUT_FILE);
-            try {
-                ObjectOutputStream sx = new ObjectOutputStream(fx);
+        String university = "----------------------------------------------------------\n"
+                          + "    Cadastro de Universidade\n"
+                          + "----------------------------------------------------------\n";
+        String nome = JOptionPane.showInputDialog(university + "Insira o nome\n");
+        String endereco = JOptionPane.showInputDialog(university + "Insira o endereco\n");
+        String bairro = JOptionPane.showInputDialog(university + "Insira o bairro\n");
+        String cidade = JOptionPane.showInputDialog(university + "Insira a cidade\n");
+        String estado = JOptionPane.showInputDialog(university + "Insira o estado\n");
 
-                String university = "----------------------------------------------------------\n"
-                                  + "    Cadastro de Universidade\n"
-                                  + "----------------------------------------------------------\n";
-                String nome = JOptionPane.showInputDialog(university + "Insira o nome\n");
-                String endereco = JOptionPane.showInputDialog(university + "Insira o endereco\n");
-                String bairro = JOptionPane.showInputDialog(university + "Insira o bairro\n");
-                String cidade = JOptionPane.showInputDialog(university + "Insira a cidade\n");
-                String estado = JOptionPane.showInputDialog(university + "Insira o estado\n");
+        Universidade novaUniversidade = new Universidade(nome, endereco, bairro, cidade, estado);
 
-                Universidade novaUniversidade = new Universidade(nome, endereco, bairro, cidade, estado);
-
-                int opt = Integer.parseInt(JOptionPane.showInputDialog("Deseja cadastrar um curso para essa universidade?\n 1 - Sim\n 2 - Nao"));
-                while (opt == 1) {
-                    novaUniversidade.novoCurso();
-                    opt = Integer.parseInt(JOptionPane.showInputDialog("Deseja cadastrar um novo curso para essa universidade?\n 1 - Sim\n 2 - Nao"));
-                }
-                sx.writeObject(novaUniversidade);
-
-                sx.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            fx.close();
-        } catch (FileAlreadyExistsException e) {
-            e.printStackTrace();
+        int opt = Integer.parseInt(JOptionPane.showInputDialog("Deseja cadastrar um curso para essa universidade?\n 1 - Sim\n 2 - Nao"));
+        while (opt == 1) {
+            novaUniversidade.novoCurso();
+            opt = Integer.parseInt(JOptionPane.showInputDialog("Deseja cadastrar um novo curso para essa universidade?\n 1 - Sim\n 2 - Nao"));
         }
+
+        return novaUniversidade;
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
