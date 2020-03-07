@@ -3,7 +3,8 @@
 ## Disciplinas
 - Introdução ao Git (Udemy)
 - Introdução à Programação
-- Algoritmos e Estruturas de dados
+- Algoritmos e Estruturas de Dados 1
+- Algoritmos e Estruturas de Dados 2
 - Curso básico de Java (Udemy)
 - Programação Orientada a Objetos
 - Curso básico de ReactJS + Redux (Udemy)
