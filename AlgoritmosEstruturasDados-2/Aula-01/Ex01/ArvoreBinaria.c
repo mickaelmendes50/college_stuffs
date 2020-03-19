@@ -490,6 +490,11 @@ struct NO* searchFather(ArvBin *raiz, int el)
 		return NULL;
 }
 
+void removerPar(ArvBin *raiz){
+    remove_ArvBin(raiz, 34);
+    remove_ArvBin(raiz, 38);
+}
+
 
 // Para uso da fila
 Fila* cria_Fila()
