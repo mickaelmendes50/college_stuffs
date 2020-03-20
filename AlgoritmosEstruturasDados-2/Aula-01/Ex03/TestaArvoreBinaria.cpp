@@ -1,6 +1,24 @@
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <vector>
 #include "ArvoreBinaria.h"
+
+using namespace std;
+
+void bubble_sort(vector<int> &vet) {
+    int i, j, cont = 0;
+    for(i = 0; i < vet.size(); i++){
+        for(j = 0; j < vet.size()-1; j++){
+            if(vet[j] > vet[j+1]){
+                int tmp = vet[j];
+                vet[j] = vet[j+1];
+                vet[j+1] = tmp;
+            }
+        }
+    }
+}
+
 int main()
 {
     //int N, dados[] = {50,100,30,20,40,45,35,37};
@@ -36,15 +54,16 @@ int main()
     printf("\nPercurso largura:\n");
     visitaEmLargura(raiz);
 
-    printf("\n\nPercurso em-ordem (sem pares):\n");
+   vector<int> vet;
+   printf("\n\nPercurso em-ordem (sem pares):\n");
    for (int i = 0; i < 50; i++) {
       if (consulta_ArvBin(raiz, i, &info)) {
-         if (i%2 == 0) {
-            remove_ArvBin(raiz, i);
-         }
+         vet.push_back(i);
       }
    }
-    emOrdem_ArvBin(raiz);
+
+   bubble_sort(vet);
+   cout << vet[vet.size()-1];
  
 
     libera_ArvBin(raiz);
