@@ -22,3 +22,13 @@ CREATE TABLE BAIRRO(
     CONSTRAINT PrkBairro PRIMARY KEY (Codigo_Bairro),
     CONSTRAINT FrkMunicipioBairro FOREIGN KEY (Codigo_Municipio) REFERENCES MUNICIPIO (Codigo_Municipio),
 );
+
+CREATE TABLE LOGRADOURO(
+    Codigo_Logradouro INTEGER NOT NULL,
+    Nome_Logradouro CHARACTER VARYING(80) NOT NULL,
+    CEP CHARACTER VARYING(8) NOT NULL,
+    Codigo_Bairro INTEGER NOT NULL,
+
+    CONSTRAINT PrkLogradouro PRIMARY KEY (Codigo_Logradouro),
+    CONSTRAINT FrkBairroLogradouro FOREIGN KEY (Codigo_Bairro) REFERENCES BAIRRO (Codigo_Logradouro),
+);
