@@ -30,7 +30,7 @@ CREATE TABLE LOGRADOURO(
     Codigo_Bairro INTEGER NOT NULL,
 
     CONSTRAINT PrkLogradouro PRIMARY KEY (Codigo_Logradouro),
-    CONSTRAINT FrkBairroLogradouro FOREIGN KEY (Codigo_Bairro) REFERENCES BAIRRO (Codigo_Logradouro),
+    CONSTRAINT FrkBairroLogradouro FOREIGN KEY (Codigo_Bairro) REFERENCES BAIRRO (Codigo_Bairro),
 );
 
 CREATE TABLE ENDERECO(
