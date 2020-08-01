@@ -32,3 +32,15 @@ CREATE TABLE LOGRADOURO(
     CONSTRAINT PrkLogradouro PRIMARY KEY (Codigo_Logradouro),
     CONSTRAINT FrkBairroLogradouro FOREIGN KEY (Codigo_Bairro) REFERENCES BAIRRO (Codigo_Logradouro),
 );
+
+CREATE TABLE ENDERECO(
+    Id_Endereco INTEGER NOT NULL,
+    Quadra CHARACTER VARYING(20) NOT NULL,
+    Lote CHARACTER VARYING(20) NOT NULL,
+    Numero CHARACTER VARYING(20) NOT NULL,
+    Complemento CHARACTER VARYING(255) NOT NULL,
+    Codigo_Logradouro INTEGER NOT NULL,
+
+    CONSTRAINT PrkEndereco PRIMARY KEY (Id_Endereco),
+    CONSTRAINT FrkLogradouroEndereco FOREIGN KEY (Codigo_Logradouro) REFERENCES LOGRADOURO (Codigo_Logradouro),
+);
