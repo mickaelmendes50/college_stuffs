@@ -4,3 +4,12 @@ CREATE TABLE UF(
 
     CONSTRAINT PrkUF PRIMARY KEY (Sigla_UF),     
 );
+
+CREATE TABLE MUNICIPIO(
+    Codigo_Municipio INTEGER NOT NULL,
+    Nome_Municipio CHARACTER VARYING(80) NOT NULL,
+    Sigla_UF CHARACTER VARYING(2) NOT NULL,
+    
+    CONSTRAINT PrkMunicipio PRIMARY KEY (Codigo_Municipio),
+    CONSTRAINT FrkUfMunicipio FOREIGN KEY (Sigla_UF) REFERENCES UF (Sigla_UF),
+);
