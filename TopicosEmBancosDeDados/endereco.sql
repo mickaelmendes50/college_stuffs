@@ -13,3 +13,12 @@ CREATE TABLE MUNICIPIO(
     CONSTRAINT PrkMunicipio PRIMARY KEY (Codigo_Municipio),
     CONSTRAINT FrkUfMunicipio FOREIGN KEY (Sigla_UF) REFERENCES UF (Sigla_UF),
 );
+
+CREATE TABLE BAIRRO(
+    Codigo_Bairro INTEGER NOT NULL,
+    Nome_Bairro CHARACTER VARYING(80) NOT NULL,
+    Codigo_Municipio INTEGER NOT NULL,
+
+    CONSTRAINT PrkBairro PRIMARY KEY (Codigo_Bairro),
+    CONSTRAINT FrkMunicipioBairro FOREIGN KEY (Codigo_Municipio) REFERENCES MUNICIPIO (Codigo_Municipio),
+);
