@@ -4,6 +4,7 @@ CREATE TABLE UF(
 
     CONSTRAINT PrkUF PRIMARY KEY (Sigla_UF),     
 );
+CREATE INDEX uf_idx ON UF (Nome_UF);
 
 CREATE TABLE MUNICIPIO(
     Codigo_Municipio NUMERIC(5) NOT NULL,
@@ -13,6 +14,7 @@ CREATE TABLE MUNICIPIO(
     CONSTRAINT PrkMunicipio PRIMARY KEY (Codigo_Municipio),
     CONSTRAINT FrkUfMunicipio FOREIGN KEY (Sigla_UF) REFERENCES UF (Sigla_UF),
 );
+CREATE INDEX municipio_idx ON MUNICIPIO (Nome_Municipio);
 
 CREATE TABLE BAIRRO(
     Codigo_Bairro NUMERIC(5) NOT NULL,
@@ -22,6 +24,7 @@ CREATE TABLE BAIRRO(
     CONSTRAINT PrkBairro PRIMARY KEY (Codigo_Bairro),
     CONSTRAINT FrkMunicipioBairro FOREIGN KEY (Codigo_Municipio) REFERENCES MUNICIPIO (Codigo_Municipio),
 );
+CREATE INDEX bairro_idx ON BAIRRO (Nome_Bairro);
 
 CREATE TABLE LOGRADOURO(
     Codigo_Logradouro NUMERIC(5) NOT NULL,
@@ -32,6 +35,7 @@ CREATE TABLE LOGRADOURO(
     CONSTRAINT PrkLogradouro PRIMARY KEY (Codigo_Logradouro),
     CONSTRAINT FrkBairroLogradouro FOREIGN KEY (Codigo_Bairro) REFERENCES BAIRRO (Codigo_Bairro),
 );
+CREATE INDEX logradouro_idx ON LOGRADOURO (Nome_Logradouro, CEP);
 
 CREATE TABLE ENDERECO(
     Id_Endereco NUMERIC(5) NOT NULL,
@@ -62,6 +66,7 @@ CREATE TABLE PESSOA(
 
     CONSTRAINT PrkPessoa PRIMARY KEY (cpf),
 );
+CREATE INDEX pessoa_idx ON PESSOA (nome);
 
 CREATE TABLE TIPODEENDERECO(
     Codigo_Tipo_End NUMERIC(2) NOT NULL,
@@ -69,6 +74,7 @@ CREATE TABLE TIPODEENDERECO(
 
     CONSTRAINT PrkTipoDeEndereco PRIMARY KEY (Codigo_Tipo_End),
 );
+CREATE INDEX tipodeendereco_idx ON TIPODEENDERECO (Nome_Tipo_End);
 
 CREATE TABLE POSSUI(
     cpf CHARACTER VARYING(11) NOT NULL,
