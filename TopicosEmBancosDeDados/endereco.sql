@@ -50,6 +50,7 @@ CREATE TABLE TELEFONE(
     Telefone CHARACTER VARYING(20) NOT NULL,
 
     CONSTRAINT PrkTelefone PRIMARY KEY (Telefone),
+    CONSTRAINT SrkTelefone PRIMARY KEY (Id_Endereco),
     CONSTRAINT FrkEnderecoTelefone FOREIGN KEY (Id_Endereco) REFERENCES ENDERECO (Id_Endereco),
 );
 
