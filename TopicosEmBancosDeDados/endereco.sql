@@ -82,3 +82,16 @@ CREATE TABLE POSSUI(
     CONSTRAINT FrkEnderecoPossui FOREIGN KEY (Id_Endereco) REFERENCES ENDERECO (Id_Endereco),
     CONSTRAINT FrkTipoDeEnderecoPossui FOREIGN KEY (Codigo_Tipo_End) REFERENCES TIPODEENDERECO (Codigo_Tipo_End),
 );
+
+CREATE TABLE DEPENDENTE(
+    Nome_Dependente CHARACTER VARYING(80) NOT NULL,
+    data_nascimento DATE NOT NULL,
+    Tipo_Dependente CHARACTER VARYING(20) NOT NULL,
+    cpf CHARACTER VARYING(11) NOT NULL,
+
+    CONSTRAINT PrkDependente PRIMARY KEY (Nome_Dependente),
+    CONSTRAINT SrkDependente PRIMARY KEY (data_nascimento),
+    CONSTRAINT TrkDependente PRIMARY KEY (Tipo_Dependente),
+    CONSTRAINT QrkDependente PRIMARY KEY (cpf),
+    CONSTRAINT FrkPessoaDependente FOREIGN KEY (cpf) REFERENCES PESSOA (cpf),
+);
