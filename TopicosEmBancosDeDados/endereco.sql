@@ -44,3 +44,11 @@ CREATE TABLE ENDERECO(
     CONSTRAINT PrkEndereco PRIMARY KEY (Id_Endereco),
     CONSTRAINT FrkLogradouroEndereco FOREIGN KEY (Codigo_Logradouro) REFERENCES LOGRADOURO (Codigo_Logradouro),
 );
+
+CREATE TABLE TELEFONE(
+    Id_Endereco INTEGER NOT NULL,
+    Telefone CHARACTER VARYING(20) NOT NULL,
+
+    CONSTRAINT PrkTelefone PRIMARY KEY (Telefone),
+    CONSTRAINT FrkEnderecoTelefone FOREIGN KEY (Id_Endereco) REFERENCES ENDERECO (Id_Endereco),
+);
