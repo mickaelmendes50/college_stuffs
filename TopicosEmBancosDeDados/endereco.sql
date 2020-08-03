@@ -60,3 +60,10 @@ CREATE TABLE PESSOA(
     nome_mae CHARACTER VARYING(80) NOT NULL,
     data_nascimento DATE NOT NULL,
 );
+
+CREATE TABLE TIPODEENDERECO(
+    Codigo_Tipo_End INTEGER NOT NULL,
+    Nome_Tipo_End CHARACTER VARYING(20) NOT NULL,
+
+    CONSTRAINT PrkTipoDeEndereco PRIMARY KEY (Codigo_Tipo_End),
+);
