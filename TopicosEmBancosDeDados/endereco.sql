@@ -69,3 +69,15 @@ CREATE TABLE TIPODEENDERECO(
 
     CONSTRAINT PrkTipoDeEndereco PRIMARY KEY (Codigo_Tipo_End),
 );
+
+CREATE TABLE POSSUI(
+    cpf CHARACTER VARYING(11) NOT NULL,
+    Id_Endereco INTEGER NOT NULL,
+    Codigo_Tipo_End INTEGER NOT NULL,
+
+    CONSTRAINT PrkPossui PRIMARY KEY (cpf),
+    CONSTRAINT SrkPossui PRIMARY KEY (Id_Endereco),
+    CONSTRAINT FrkPessoaPossui FOREIGN KEY (cpf) REFERENCES PESSOA (cpf),
+    CONSTRAINT FrkEnderecoPossui FOREIGN KEY (Id_Endereco) REFERENCES ENDERECO (Id_Endereco),
+    CONSTRAINT FrkTipoDeEnderecoPossui FOREIGN KEY (Codigo_Tipo_End) REFERENCES TIPODEENDERECO (Codigo_Tipo_End),
+);
