@@ -49,8 +49,7 @@ CREATE TABLE TELEFONE(
     Id_Endereco INTEGER NOT NULL,
     Telefone CHARACTER VARYING(20) NOT NULL,
 
-    CONSTRAINT PrkTelefone PRIMARY KEY (Telefone),
-    CONSTRAINT SrkTelefone PRIMARY KEY (Id_Endereco),
+    CONSTRAINT PrkTelefone PRIMARY KEY (Telefone, Id_Endereco),
     CONSTRAINT FrkEnderecoTelefone FOREIGN KEY (Id_Endereco) REFERENCES ENDERECO (Id_Endereco),
 );
 
@@ -76,8 +75,7 @@ CREATE TABLE POSSUI(
     Id_Endereco INTEGER NOT NULL,
     Codigo_Tipo_End INTEGER NOT NULL,
 
-    CONSTRAINT PrkPossui PRIMARY KEY (cpf),
-    CONSTRAINT SrkPossui PRIMARY KEY (Id_Endereco),
+    CONSTRAINT PrkPossui PRIMARY KEY (cpf, Id_Endereco),
     CONSTRAINT FrkPessoaPossui FOREIGN KEY (cpf) REFERENCES PESSOA (cpf),
     CONSTRAINT FrkEnderecoPossui FOREIGN KEY (Id_Endereco) REFERENCES ENDERECO (Id_Endereco),
     CONSTRAINT FrkTipoDeEnderecoPossui FOREIGN KEY (Codigo_Tipo_End) REFERENCES TIPODEENDERECO (Codigo_Tipo_End),
@@ -89,9 +87,6 @@ CREATE TABLE DEPENDENTE(
     Tipo_Dependente CHARACTER VARYING(20) NOT NULL,
     cpf CHARACTER VARYING(11) NOT NULL,
 
-    CONSTRAINT PrkDependente PRIMARY KEY (Nome_Dependente),
-    CONSTRAINT SrkDependente PRIMARY KEY (data_nascimento),
-    CONSTRAINT TrkDependente PRIMARY KEY (Tipo_Dependente),
-    CONSTRAINT QrkDependente PRIMARY KEY (cpf),
+    CONSTRAINT PrkDependente PRIMARY KEY (Nome_Dependente, data_nascimento, Tipo_Dependente, cpf),
     CONSTRAINT FrkPessoaDependente FOREIGN KEY (cpf) REFERENCES PESSOA (cpf),
 );
