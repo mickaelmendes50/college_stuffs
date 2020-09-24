@@ -10,6 +10,8 @@ int altura_ArvAVL(ArvAVL *raiz);
 int totalNO_ArvAVL(ArvAVL *raiz);
 int umFilho_ArvAVL(ArvAVL *raiz, int valor);
 int consulta_ArvAVL(ArvAVL *raiz, int valor);
+int consultaNO(ArvAVL *raiz, int valor, int *limitInf, int *limitSup);
+int consultaIntervalarAVL(ArvAVL *raiz, int valor, int *limitInf, int *limitSup);
 void preOrdem_ArvAVL(ArvAVL *raiz);
 void emOrdem_ArvAVL(ArvAVL *raiz);
 void posOrdem_ArvAVL(ArvAVL *raiz);

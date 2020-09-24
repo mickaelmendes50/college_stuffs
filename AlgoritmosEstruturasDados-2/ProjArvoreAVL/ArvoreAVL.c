@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "ArvoreAVL.h" //inclui os Prot�tipos
 
+int cont = 0;
+
 struct NO{
     int info;
     int altura;
@@ -142,6 +144,32 @@ int consulta_ArvAVL(ArvAVL *raiz, int valor){
             atual = atual->esq;
     }
     return 0;
+}
+
+int consultaNO(ArvAVL *raiz, int valor, int *limitInf, int *limitSup) {
+    if (*raiz == NULL)
+        return 0;
+    if (*raiz != NULL) {
+        consultaNO(&((*raiz)->esq), valor, limitInf, limitSup);
+
+        if ((*raiz)->info < valor) {
+            *limitInf = (*raiz)->info;
+        } else if (cont == 0) {
+            *limitSup = (*raiz)->info;
+            cont++;
+        }
+        consultaNO(&((*raiz)->dir), valor, limitInf, limitSup);
+    }
+    return 1;
+}
+
+int consultaIntervalarAVL(ArvAVL *raiz, int valor, int *limitInf, int *limitSup) {
+    if (consulta_ArvAVL(raiz, valor)) {
+        return 1;
+    } else {
+        consultaNO(raiz, valor, limitInf, limitSup);
+        return 0;
+    }
 }
 
 //=================================
