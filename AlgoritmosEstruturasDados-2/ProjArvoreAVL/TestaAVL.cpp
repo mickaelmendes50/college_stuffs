@@ -1,6 +1,9 @@
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include "ArvoreAVL.h"
+
+using namespace std;
 
 int main(){
     ArvAVL* avl;
@@ -19,21 +22,11 @@ int main(){
         //preOrdem_ArvAVL(avl);
         //printf("\n\n");
     }
-    
-    printf("\nAVL tree:\n");
-    emOrdem_ArvAVL(avl);
-    printf("\n\n");
 
-    remove_ArvAVL(avl,6);
-    remove_ArvAVL(avl,7);
-    remove_ArvAVL(avl,4);
-
-    printf("\nAVL tree apos remocao de nos:\n");
-    emOrdem_ArvAVL(avl);
-    printf("\n\n");
+    cout << umFilho_ArvAVL(avl, 0);
 
     libera_ArvAVL(avl);
     
-    system("pause > nul");
+    //system("pause > nul");
     return 0;
 }
