@@ -11,6 +11,7 @@ void mostra_TempoContador(clock_t tempo_inicial, clock_t tempo_final) {
     unsigned long int tempo;
     tempo = ((tempo_final - tempo_inicial) * 1000/CLOCKS_PER_SEC);
     cout << "Tempo: " << tempo << endl;
+    cout << "Iterações: " << getCont() << endl;
 }
 
 int main() {
@@ -34,7 +35,7 @@ int main() {
         consulta_ArvLLRB(llrb, i);
     }
     tempo_final = clock();
-    mostra_TempoContador(tempo_inicial, tempo_final);    
+    mostra_TempoContador(tempo_inicial, tempo_final);
 
     // Remoção
     // Crescente

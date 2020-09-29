@@ -7,12 +7,18 @@
 #define RED 1
 #define BLACK 0
 
+int cont = 0;
+
 struct NO{
     int info;
     struct NO *esq;
     struct NO *dir;
     int cor;
 };
+
+int getCont() {
+    return cont;
+}
 
 // =================================
 // CRIAÇÃO DA ARVORE
@@ -46,6 +52,7 @@ void libera_ArvLLRB(ArvLLRB* raiz){
 // CONSULTA ÁRVORE
 // =================================
 int consulta_ArvLLRB(ArvLLRB *raiz, int valor){
+    cont++;
     if(raiz == NULL)
         return 0;
     struct NO* atual = *raiz;
@@ -102,6 +109,7 @@ void trocaCor(struct NO* H){
 // INSERCAO
 // =================================
 struct NO* insereNO(struct NO* H, int valor, int *resp){
+    cont++;
     if(H == NULL){
         struct NO *novo;
         novo = (struct NO*)malloc(sizeof(struct NO));
@@ -144,6 +152,7 @@ struct NO* insereNO(struct NO* H, int valor, int *resp){
 }
 
 int insere_ArvLLRB(ArvLLRB* raiz, int valor){
+    cont++;
     int resp;
 
     *raiz = insereNO(*raiz,valor,&resp);
@@ -214,6 +223,7 @@ struct NO* procuraMenor(struct NO* atual){
 }
 
 struct NO* remove_NO(struct NO* H, int valor){
+    cont++;
     if(valor < H->info){
         if(cor(H->esq) == BLACK && cor(H->esq->esq) == BLACK)
             H = move2EsqRED(H);
@@ -242,6 +252,7 @@ struct NO* remove_NO(struct NO* H, int valor){
 }
 
 int remove_ArvLLRB(ArvLLRB *raiz, int valor){
+    cont++;
     if(consulta_ArvLLRB(raiz,valor)){
         struct NO* h = *raiz;
         *raiz = remove_NO(h,valor);
