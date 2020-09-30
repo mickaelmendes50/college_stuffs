@@ -30,6 +30,14 @@ int main() {
     tempo_final = clock();
     mostra_TempoContador(tempo_inicial, tempo_final);
 
+    // Decrescente
+    tempo_inicial = clock();
+    for (int i = 10000; i > 0; i--) {
+        insere_ArvLLRB(llrb, i);
+    }
+    tempo_final = clock();
+    mostra_TempoContador(tempo_inicial, tempo_final);
+
     // Aleatório
     tempo_inicial = clock();
     vector.clear();
@@ -52,6 +60,14 @@ int main() {
     tempo_final = clock();
     mostra_TempoContador(tempo_inicial, tempo_final);
 
+    // Decrescente
+    tempo_inicial = clock();
+    for (int i = 10000; i > 0; i--) {
+        consulta_ArvLLRB(llrb, i);
+    }
+    tempo_final = clock();
+    mostra_TempoContador(tempo_inicial, tempo_final);
+
     // Aleatório
     tempo_inicial = clock();
     for (int i = 0; i < 10000; i++) {
@@ -65,6 +81,14 @@ int main() {
     // Crescente
     tempo_inicial = clock();
     for (int i = 0; i < 10000; i++) {
+        remove_ArvLLRB(llrb, i);
+    }
+    tempo_final = clock();
+    mostra_TempoContador(tempo_inicial, tempo_final);
+
+    // Decrescente
+    tempo_inicial = clock();
+    for (int i = 10000; i > 0; i--) {
         remove_ArvLLRB(llrb, i);
     }
     tempo_final = clock();
