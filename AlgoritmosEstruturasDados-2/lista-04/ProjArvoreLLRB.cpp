@@ -23,6 +23,7 @@ int main() {
     // LLRB 10000
     // Inserção
     // Crescente
+    resetCont();
     tempo_inicial = clock();
     for (int i = 0; i < 10000; i++) {
         insere_ArvLLRB(llrb, i);
@@ -31,6 +32,7 @@ int main() {
     mostra_TempoContador(tempo_inicial, tempo_final);
 
     // Decrescente
+    resetCont();
     tempo_inicial = clock();
     for (int i = 10000; i > 0; i--) {
         insere_ArvLLRB(llrb, i);
@@ -39,6 +41,7 @@ int main() {
     mostra_TempoContador(tempo_inicial, tempo_final);
 
     // Aleatório
+    resetCont();
     tempo_inicial = clock();
     vector.clear();
     for (int i = 0; i < 10000; i++) {
@@ -53,6 +56,7 @@ int main() {
 
     // Consulta
     // Crescente
+    resetCont();
     tempo_inicial = clock();
     for (int i = 0; i < 10000; i++) {
         consulta_ArvLLRB(llrb, i);
@@ -61,6 +65,7 @@ int main() {
     mostra_TempoContador(tempo_inicial, tempo_final);
 
     // Decrescente
+    resetCont();
     tempo_inicial = clock();
     for (int i = 10000; i > 0; i--) {
         consulta_ArvLLRB(llrb, i);
@@ -69,6 +74,7 @@ int main() {
     mostra_TempoContador(tempo_inicial, tempo_final);
 
     // Aleatório
+    resetCont();
     tempo_inicial = clock();
     for (int i = 0; i < 10000; i++) {
         insere_ArvLLRB(llrb, vector[i]);
@@ -79,6 +85,7 @@ int main() {
 
     // Remoção
     // Crescente
+    resetCont();
     tempo_inicial = clock();
     for (int i = 0; i < 10000; i++) {
         remove_ArvLLRB(llrb, i);
@@ -87,6 +94,7 @@ int main() {
     mostra_TempoContador(tempo_inicial, tempo_final);
 
     // Decrescente
+    resetCont();
     tempo_inicial = clock();
     for (int i = 10000; i > 0; i--) {
         remove_ArvLLRB(llrb, i);
@@ -95,6 +103,7 @@ int main() {
     mostra_TempoContador(tempo_inicial, tempo_final);
 
     // Aleatório
+    resetCont();
     tempo_inicial = clock();
     for (int i = 0; i < 10000; i++) {
         remove_ArvLLRB(llrb, vector[i]);

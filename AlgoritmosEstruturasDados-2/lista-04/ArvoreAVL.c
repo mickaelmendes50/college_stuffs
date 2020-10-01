@@ -15,6 +15,10 @@ int getCont() {
     return cont;
 }
 
+void resetCont() {
+    cont = 0;
+}
+
 ArvAVL* cria_ArvAVL(){
     ArvAVL* raiz = (ArvAVL*) malloc(sizeof(ArvAVL));
     if(raiz != NULL)
@@ -180,7 +184,7 @@ int consultaIntervalarAVL(ArvAVL *raiz, int valor, int *limitInf, int *limitSup)
 
 //=================================
 void RotacaoLL(ArvAVL *A){//LL
-    printf("RotacaoLL\n");
+    //printf("RotacaoLL\n");
     struct NO *B;
     B = (*A)->esq;
     (*A)->esq = B->dir;
@@ -191,7 +195,7 @@ void RotacaoLL(ArvAVL *A){//LL
 }
 
 void RotacaoRR(ArvAVL *A){//RR
-    printf("RotacaoRR\n");
+    //printf("RotacaoRR\n");
     struct NO *B;
     B = (*A)->dir;
     (*A)->dir = B->esq;
@@ -251,7 +255,7 @@ int insere_ArvAVL(ArvAVL *raiz, int valor){
                 }
             }
         }else{
-            printf("Valor duplicado!!\n");
+            //printf("Valor duplicado!!\n");
             return 0;
         }
     }
@@ -274,7 +278,7 @@ struct NO* procuraMenor(struct NO* atual){
 int remove_ArvAVL(ArvAVL *raiz, int valor){
     cont++;
 	if(*raiz == NULL){// valor n�o existe
-	    printf("valor n�o existe!!\n");
+	    //printf("valor n�o existe!!\n");
 	    return 0;
 	}
 

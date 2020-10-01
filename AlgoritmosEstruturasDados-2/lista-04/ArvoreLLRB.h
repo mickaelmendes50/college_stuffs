@@ -13,3 +13,4 @@ void preOrdem_ArvLLRB(ArvLLRB *raiz, int H);
 void emOrdem_ArvLLRB(ArvLLRB *raiz, int H);
 void posOrdem_ArvLLRB(ArvLLRB *raiz, int H);
 int getCont();
+void resetCont()

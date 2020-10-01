@@ -20,6 +20,10 @@ int getCont() {
     return cont;
 }
 
+void resetCont() {
+    cont = 0;
+}
+
 // =================================
 // CRIAÇÃO DA ARVORE
 // =================================
