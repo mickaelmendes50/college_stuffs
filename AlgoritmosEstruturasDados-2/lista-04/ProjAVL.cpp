@@ -21,7 +21,7 @@ int main() {
     vector<int> vector;
 
     // avl 10000
-    // Inserção
+    cout << "/ Inserção" << endl;
     // Crescente
     resetCont();
     tempo_inicial = clock();
@@ -54,7 +54,7 @@ int main() {
     cout << "Aleatorio" << endl;
     mostra_TempoContador(tempo_inicial, tempo_final);
 
-    // Consulta
+    cout << "/ Consulta" << endl;
     // Crescente
     resetCont();
     tempo_inicial = clock();
@@ -83,7 +83,7 @@ int main() {
     cout << "Aleatorio" << endl;
     mostra_TempoContador(tempo_inicial, tempo_final);
 
-    // Remoção
+    cout << "/ Remoção" << endl;
     // Crescente
     resetCont();
     tempo_inicial = clock();
