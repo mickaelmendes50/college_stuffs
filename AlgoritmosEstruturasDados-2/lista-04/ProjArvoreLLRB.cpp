@@ -20,12 +20,12 @@ int main() {
     clock_t tempo_inicial, tempo_final;
     vector<int> vector;
 
-    // LLRB 10000
+    // LLRB 500000
     cout << "/ Inserção" << endl;
     // Crescente
     resetCont();
     tempo_inicial = clock();
-    for (int i = 0; i < 10000; i++) {
+    for (int i = 0; i < 500000; i++) {
         insere_ArvLLRB(llrb, i);
     }
     tempo_final = clock();
@@ -34,7 +34,7 @@ int main() {
     // Decrescente
     resetCont();
     tempo_inicial = clock();
-    for (int i = 10000; i > 0; i--) {
+    for (int i = 500000; i > 0; i--) {
         insere_ArvLLRB(llrb, i);
     }
     tempo_final = clock();
@@ -44,9 +44,9 @@ int main() {
     resetCont();
     tempo_inicial = clock();
     vector.clear();
-    for (int i = 0; i < 10000; i++) {
+    for (int i = 0; i < 500000; i++) {
         int random;
-        random = rand()%10000;
+        random = rand()%500000;
         vector.push_back(random);
         insere_ArvLLRB(llrb, vector[i]);
     }
@@ -58,7 +58,7 @@ int main() {
     // Crescente
     resetCont();
     tempo_inicial = clock();
-    for (int i = 0; i < 10000; i++) {
+    for (int i = 0; i < 500000; i++) {
         consulta_ArvLLRB(llrb, i);
     }
     tempo_final = clock();
@@ -67,7 +67,7 @@ int main() {
     // Decrescente
     resetCont();
     tempo_inicial = clock();
-    for (int i = 10000; i > 0; i--) {
+    for (int i = 500000; i > 0; i--) {
         consulta_ArvLLRB(llrb, i);
     }
     tempo_final = clock();
@@ -76,7 +76,7 @@ int main() {
     // Aleatório
     resetCont();
     tempo_inicial = clock();
-    for (int i = 0; i < 10000; i++) {
+    for (int i = 0; i < 500000; i++) {
         insere_ArvLLRB(llrb, vector[i]);
     }
     tempo_final = clock();
@@ -87,7 +87,7 @@ int main() {
     // Crescente
     resetCont();
     tempo_inicial = clock();
-    for (int i = 0; i < 10000; i++) {
+    for (int i = 0; i < 500000; i++) {
         remove_ArvLLRB(llrb, i);
     }
     tempo_final = clock();
@@ -96,7 +96,7 @@ int main() {
     // Decrescente
     resetCont();
     tempo_inicial = clock();
-    for (int i = 10000; i > 0; i--) {
+    for (int i = 500000; i > 0; i--) {
         remove_ArvLLRB(llrb, i);
     }
     tempo_final = clock();
@@ -105,7 +105,7 @@ int main() {
     // Aleatório
     resetCont();
     tempo_inicial = clock();
-    for (int i = 0; i < 10000; i++) {
+    for (int i = 0; i < 500000; i++) {
         remove_ArvLLRB(llrb, vector[i]);
     }
     tempo_final = clock();
