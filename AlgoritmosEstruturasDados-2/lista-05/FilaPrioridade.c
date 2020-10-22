@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "FilaPrioridadeHeap.h" //inclui os Protótipos
+#include "FilaPrioridade.h" //inclui os Protï¿½tipos
 
 // http://see-programming.blogspot.com.br/2013/05/implement-priority-queue-using-binary.html
 // constroisobe ???
@@ -31,10 +31,17 @@ void libera_FilaPrio(FilaPrio* fp){
     free(fp);
 }
 
-int consulta_FilaPrio(FilaPrio* fp, char* nome){
+int consulta_FilaPrioHeap(FilaPrio* fp, char* nome){
     if(fp == NULL || fp->qtd == 0)
         return 0;
     strcpy(nome,fp->dados[0].nome);
+    return 1;
+}
+
+int consulta_FilaPrioArrays(FilaPrio* fp, char* nome){
+    if(fp == NULL || fp->qtd == 0)
+        return 0;
+    strcpy(nome,fp->dados[fp->qtd-1].nome);
     return 1;
 }
 
@@ -52,17 +59,35 @@ void promoverElemento(FilaPrio* fp, int filho){
     }
 }
 
-int insere_FilaPrio(FilaPrio* fp, char *nome, int prioridade){
+int insere_FilaPrioHeap(FilaPrio* fp, char *nome, int prioridade){
     if(fp == NULL)
         return 0;
     if(fp->qtd == MAX)//fila cheia
         return 0;
-    /* insere na primeira posição livre */
+    /* insere na primeira posiï¿½ï¿½o livre */
     strcpy(fp->dados[fp->qtd].nome,nome);
     fp->dados[fp->qtd].prio = prioridade;
-    /* desloca elemento para posição correta */
+    /* desloca elemento para posiï¿½ï¿½o correta */
     promoverElemento(fp,fp->qtd);
-    /* incrementa número de elementos no heap */
+    /* incrementa nï¿½mero de elementos no heap */
+    fp->qtd++;
+    return 1;
+}
+
+int insere_FilaPrioArray(FilaPrio* fp, char *nome, int prioridade){
+    if(fp == NULL)
+        return 0;
+    if(fp->qtd == MAX)//fila cheia
+        return 0;
+
+    int i = fp->qtd-1;
+    while (i >= 0 && fp->dados[i].prio >= prioridade) {
+        fp->dados[i+1] = fp->dados[i];
+        i--;
+    }
+
+    strcpy(fp->dados[i+1].nome,nome);
+    fp->dados[i+1].prio = prioridade;
     fp->qtd++;
     return 1;
 }
@@ -88,7 +113,7 @@ void rebaixarElemento(FilaPrio* fp, int pai){
     }
 }
 
-int remove_FilaPrio(FilaPrio* fp){
+int remove_FilaPrioHeap(FilaPrio* fp){
     if(fp == NULL)
         return 0;
     if(fp->qtd == 0)
@@ -97,6 +122,16 @@ int remove_FilaPrio(FilaPrio* fp){
     fp->qtd--;
     fp->dados[0] = fp->dados[fp->qtd];
     rebaixarElemento(fp,0);
+    return 1;
+}
+
+int remove_FilaPrioArray(FilaPrio* fp){
+    if(fp == NULL)
+        return 0;
+    if(fp->qtd == 0)
+        return 0;
+
+    fp->qtd--;
     return 1;
 }
 
