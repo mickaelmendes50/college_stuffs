@@ -5,6 +5,7 @@
 - Introdução à Programação
 - Algoritmos e Estruturas de Dados 1
 - Algoritmos e Estruturas de Dados 2
+- Análise e Projeto de Algoritmos
 - Curso básico de Java (Udemy)
 - Programação Orientada a Objetos
 - Tópicos Especiais em Bancos de Dados
