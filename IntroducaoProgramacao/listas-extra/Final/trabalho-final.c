@@ -70,6 +70,18 @@ int cadastrar_cliente() {
     return 1;
 }
 
+// Função para listar clientes
+void listar_clientes() {
+    for (int i = 0; i < contador_clientes; i++) {
+        printf("\n========== Cliente %d =========\n", i+1);
+        printf("Código: %d\n", clientes[i].codigo);
+        printf("Nome: %s\n", clientes[i].nome);
+        printf("CPF/CNPJ: %s\n", clientes[i].cpf);
+        printf("Telefone: %s\n", clientes[i].telefone);
+        printf("Endereço: %s\n", clientes[i].endereco);
+    }
+}
+
 /**
  * Menus de interação
  */
