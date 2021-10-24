@@ -60,10 +60,10 @@ int cadastrar_cliente() {
     scanf("%s", endereco);
 
     clientes[contador_clientes].codigo = codigo;
-    *clientes[contador_clientes].nome = *nome;
-    *clientes[contador_clientes].cpf = *cpf;
-    *clientes[contador_clientes].telefone = *telefone;
-    *clientes[contador_clientes].endereco = *endereco;
+    strcpy(clientes[contador_clientes].nome, nome);
+    strcpy(clientes[contador_clientes].cpf, cpf);
+    strcpy(clientes[contador_clientes].telefone, telefone);
+    strcpy(clientes[contador_clientes].endereco, endereco);
 
     // Incrementa o número de clientes
     contador_clientes++;
@@ -95,6 +95,9 @@ void menu_gerenciar_cliente() {
                 }
                 printf("\nOps! Algo deu errado\n\n");
                 break;
+            
+            case 'L':
+                listar_clientes();
             
             case 'S':
                 break;
