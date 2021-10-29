@@ -243,7 +243,7 @@ void menu_gerenciar_cliente() {
                 break;
             
             default:
-                printf("\n** Comando inválido digite C, T ou S para prosseguir **\n");
+                printf("\n** Comando inválido digite C, L, B, A, E ou S para prosseguir **\n");
                 break;
         }
     } while (opcao != 'S');
