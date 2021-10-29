@@ -120,6 +120,85 @@ void listar_clientes() {
     }
 }
 
+// Função para buscar clientes
+int buscar_clientes() {
+    int opcao;
+    //do {
+        printf("\n============ Buscar Cliente ============\n");
+        printf("Digite um comando para prosseguir:\n");
+        printf("1 – Buscar por nome\n");
+        printf("2 – Buscar por código\n");
+        printf("3 – Buscar por CPF/CNPJ\n");
+        printf("0 – Sair\n");
+        scanf("%d", &opcao);
+
+        char aux_nome[TAM_MAX_NOME + 1];
+        int aux_codigo;
+        char aux_cpf[TAM_CPF + 1];
+
+        switch (opcao) {
+            case 1:
+                printf("Informe o nome: ");
+                scanf("%s", aux_nome);
+                for (int i = 0; i < contador_clientes; i++) {
+                    // Caso o nome seja igual
+                    if (strcmp(aux_nome, clientes[i].nome) == 0) {
+                        printf("\n========== Cliente =========\n");
+                        printf("Código: %d\n", clientes[i].codigo);
+                        printf("Nome: %s\n", clientes[i].nome);
+                        printf("CPF/CNPJ: %s\n", clientes[i].cpf);
+                        printf("Telefone: %s\n", clientes[i].telefone);
+                        printf("Endereço: %s\n", clientes[i].endereco);
+                        return 1;
+                    }
+                }
+                break;
+            
+            case 2:
+                printf("Informe o código: ");
+                scanf("%d", &aux_codigo);
+                for (int i = 0; i < contador_clientes; i++) {
+                    // Caso o código seja igual
+                    if (aux_codigo == clientes[i].codigo) {
+                        printf("\n========== Cliente =========\n");
+                        printf("Código: %d\n", clientes[i].codigo);
+                        printf("Nome: %s\n", clientes[i].nome);
+                        printf("CPF/CNPJ: %s\n", clientes[i].cpf);
+                        printf("Telefone: %s\n", clientes[i].telefone);
+                        printf("Endereço: %s\n", clientes[i].endereco);
+                        return 1;
+                    }
+                }
+                break;
+
+            case 3:
+                printf("Informe o CPF/CNPJ: ");
+                scanf("%s", aux_cpf);
+                for (int i = 0; i < contador_clientes; i++) {
+                    // Caso o CPF/CNPJ seja igual
+                    if (strcmp(aux_cpf, clientes[i].cpf) == 0) {
+                        printf("\n========== Cliente =========\n");
+                        printf("Código: %d\n", clientes[i].codigo);
+                        printf("Nome: %s\n", clientes[i].nome);
+                        printf("CPF/CNPJ: %s\n", clientes[i].cpf);
+                        printf("Telefone: %s\n", clientes[i].telefone);
+                        printf("Endereço: %s\n", clientes[i].endereco);
+                        return 1;
+                    }
+                }
+                break;
+            
+            case 0:
+                break;
+        
+            default:
+                printf("\n** Comando inválido digite 1, 2, 3 ou 0 para prosseguir **\n");
+                break;
+        }
+    //} while (opcao != 0);
+    return 0;
+}
+
 /**
  * Menus de interação
  */
@@ -154,6 +233,12 @@ void menu_gerenciar_cliente() {
                 printf("\nNenhum cliente cadastrado.\n\n");
                 break;
             
+            case 'B':
+                if (buscar_clientes()) {
+                    break;
+                }
+                printf("\nCliente não encontrado.\n\n");
+                break;
             case 'S':
                 break;
             
