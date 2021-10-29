@@ -130,6 +130,7 @@ int buscar_clientes() {
         printf("2 – Buscar por código\n");
         printf("3 – Buscar por CPF/CNPJ\n");
         printf("0 – Sair\n");
+        printf("\nEscolha: ");
         scanf("%d", &opcao);
 
         char aux_nome[TAM_MAX_NOME + 1];
@@ -208,6 +209,7 @@ int atualizar_clientes() {
         printf("1 – Buscar por código\n");
         printf("2 – Buscar por CPF/CNPJ\n");
         printf("0 – Sair\n");
+        printf("\nEscolha: ");
         scanf("%d", &opcao);
 
         int aux_codigo;
@@ -313,6 +315,7 @@ void menu_gerenciar_cliente() {
         printf("A – Atualizar um cliente cadastrado\n");
         printf("E – Excluir um cliente cadastrado\n");
         printf("S – Sair\n");
+        printf("\nEscolha: ");
         scanf(" %c", &opcao);
 
         switch (opcao) {
@@ -368,6 +371,7 @@ void menu_gerenciar_conta() {
     printf("T – Realizar transferência entre contas.\n");
     printf("E – Exibir extrato de uma conta.\n");
     printf("S – Sair\n");
+    printf("\nEscolha: ");
 }
 
 // Menu inicial
