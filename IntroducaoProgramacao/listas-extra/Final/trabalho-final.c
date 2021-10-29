@@ -72,6 +72,44 @@ int cadastrar_cliente() {
 
 // Função para listar clientes
 void listar_clientes() {
+    int aux_int;
+    char aux_string[50] = "";
+
+    // Ordenando o struct
+    for (int i = 0; i < contador_clientes-1; i++) {
+        for (int j = 1; j < contador_clientes; j++) {
+
+            // Compara as strings do nome para saber quem vem antes
+            if (strcmp(clientes[i].nome, clientes[j].nome) > 0) {
+                // Inverte a posição do código
+                aux_int = clientes[j].codigo;
+                clientes[j].codigo = clientes[i].codigo;
+                clientes[i].codigo = aux_int;
+
+                // Inverte a posição do nome
+                strcpy(aux_string, clientes[j].nome);
+                strcpy(clientes[j].nome, clientes[i].nome);
+                strcpy(clientes[i].nome, aux_string);
+
+                // Inverte a posição do CPF/CNPJ
+                strcpy(aux_string, clientes[j].cpf);
+                strcpy(clientes[j].cpf, clientes[i].cpf);
+                strcpy(clientes[i].cpf, aux_string);                
+
+                // Inverte a posição do telefone
+                strcpy(aux_string, clientes[j].telefone);
+                strcpy(clientes[j].telefone, clientes[i].telefone);
+                strcpy(clientes[i].telefone, aux_string);
+
+                // Inverte a posição do endereço
+                strcpy(aux_string, clientes[j].endereco);
+                strcpy(clientes[j].endereco, clientes[i].endereco);
+                strcpy(clientes[i].endereco, aux_string);
+            }
+        }   
+    }
+    
+    // Imprime a struct na tela
     for (int i = 0; i < contador_clientes; i++) {
         printf("\n========== Cliente %d =========\n", i+1);
         printf("Código: %d\n", clientes[i].codigo);
@@ -89,7 +127,7 @@ void listar_clientes() {
 void menu_gerenciar_cliente() {
     char opcao;
     do {
-        printf("============ Gerenciar Clientes ============\n");
+        printf("\n============ Gerenciar Clientes ============\n");
         printf("Digite um comando para prosseguir:\n");
         printf("C – Cadastrar um cliente\n");
         printf("L – Listar todos os clientes cadastrados\n");
@@ -109,7 +147,12 @@ void menu_gerenciar_cliente() {
                 break;
             
             case 'L':
-                listar_clientes();
+                if (contador_clientes > 0) {
+                    listar_clientes();
+                    break;
+                }
+                printf("\nNenhum cliente cadastrado.\n\n");
+                break;
             
             case 'S':
                 break;
