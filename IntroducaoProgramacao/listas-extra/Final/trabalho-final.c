@@ -14,6 +14,18 @@
 /**
  * Tipos de dados 
  */
+// Cria um novo tipo de dados chamado Conta com 
+// as caracteristicas descritas
+typedef struct {
+    int agencia;
+    int numero;
+    double saldo;
+} Conta;
+// Vamos definir um contador para auxiliar no
+// cadastro de novas contas, visto que ela não
+// pode exceder o limite previsto
+int contador_contas = 0;
+
 // Cria um novo tipo de dados chamado Cliente com 
 // as caracteristicas descritas
 typedef struct {
@@ -22,12 +34,14 @@ typedef struct {
     char cpf[TAM_CPF + 1];
     char telefone[TAM_TELEFONE + 1];
     char endereco[TAM_MAX_ENDERECO + 1];
+    Conta contas[QUANT_MAX_CONTAS + 1];
 } Cliente;
 // Intancia os clientes de forma global
 // para estar definido em qualquer escopo
 Cliente clientes[QUANT_MAX_CLIENTES + 1];
 // Vamos definir um contador para auxiliar no
-// cadastro de novos clientes
+// cadastro de novos clientes, visto que ele não
+// pode exceder o limite previsto
 int contador_clientes = 0;
 
 /**
@@ -499,7 +513,7 @@ void menu_principal() {
                 menu_gerenciar_cliente();
                 break;
             case 'T':
-                menu_gerenciar_cliente();
+                menu_gerenciar_conta();
                 break;
             case 'S':
                 break;
