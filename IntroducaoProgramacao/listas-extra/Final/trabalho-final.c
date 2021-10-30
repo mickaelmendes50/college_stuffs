@@ -35,6 +35,7 @@ typedef struct {
     char telefone[TAM_TELEFONE + 1];
     char endereco[TAM_MAX_ENDERECO + 1];
     Conta contas[QUANT_MAX_CONTAS + 1];
+    int quant_contas; // Pra controlar a quantidade de contas vinculadas a cada usuário
 } Cliente;
 // Intancia os clientes de forma global
 // para estar definido em qualquer escopo
@@ -64,20 +65,21 @@ int cadastrar_cliente() {
             return 0;
         }
     }
-        printf("Nome: ");
-        scanf("%s", nome);
-        printf("CPF/CPNJ: ");
-        scanf("%s", cpf);
-        printf("Telefone: ");
-        scanf("%s", telefone);
-        printf("Endereço: ");
-        scanf("%s", endereco);
+    printf("Nome: ");
+    scanf("%s", nome);
+    printf("CPF/CPNJ: ");
+    scanf("%s", cpf);
+    printf("Telefone: ");
+    scanf("%s", telefone);
+    printf("Endereço: ");
+    scanf("%s", endereco);
 
-        clientes[contador_clientes].codigo = codigo;
-        strcpy(clientes[contador_clientes].nome, nome);
-        strcpy(clientes[contador_clientes].cpf, cpf);
-        strcpy(clientes[contador_clientes].telefone, telefone);
-        strcpy(clientes[contador_clientes].endereco, endereco);
+    clientes[contador_clientes].codigo = codigo;
+    clientes[contador_clientes].quant_contas = 0;
+    strcpy(clientes[contador_clientes].nome, nome);
+    strcpy(clientes[contador_clientes].cpf, cpf);
+    strcpy(clientes[contador_clientes].telefone, telefone);
+    strcpy(clientes[contador_clientes].endereco, endereco);
 
     // Incrementa o número de clientes
     contador_clientes++;
@@ -412,6 +414,100 @@ int excluir_clientes() {
     return 0;
 }
 
+int cadastrar_conta() {
+    int opcao;
+    int aux_codigo;
+    int aux_agencia;
+    int aux_numero;
+    char aux_cpf[TAM_CPF + 1];
+
+    printf("\n===== Buscar Cliente =====\n");
+    printf("1 - Código\n");
+    printf("2 - CPF/CNPJ\n");
+    printf("0 - Sair\n");
+    printf("\nEscolha: ");
+    scanf("%d", &opcao);
+
+    switch (opcao) {
+        case 1:
+            printf("Informe o código: ");
+            scanf("%d", &aux_codigo);
+            for (int i = 0; i < contador_clientes; i++) {
+                // Caso o código seja igual
+                if (aux_codigo == clientes[i].codigo) {
+                    printf("\n========== Cliente =========\n");
+                    printf("Código: %d\n", clientes[i].codigo);
+                    printf("Nome: %s\n", clientes[i].nome);
+                    printf("CPF/CNPJ: %s\n", clientes[i].cpf);
+                    printf("Telefone: %s\n", clientes[i].telefone);
+                    printf("Endereço: %s\n", clientes[i].endereco);
+
+                    printf("\n===== Informações da Conta =====\n");
+                    printf("Agencia: ");
+                    scanf("%d", &aux_agencia);
+                    printf("Conta: ");
+                    scanf("%d", &aux_numero);
+                    for (int j = 0; j < clientes[i].quant_contas; j++) {
+                        if (clientes[i].contas[j].agencia == aux_agencia && clientes[i].contas[j].numero) {
+                            printf("\n** Conta já cadastrada **\n\n");
+                            return 0;
+                        }
+                    }
+
+                    clientes[i].contas[clientes[i].quant_contas].agencia = aux_agencia;
+                    clientes[i].contas[clientes[i].quant_contas].numero = aux_numero;
+                    clientes[i].contas[clientes[i].quant_contas].saldo = 0;
+                    clientes[i].quant_contas++;
+                    return 1;
+                }
+            }
+            break;
+
+        case 2:
+            printf("Informe o código: ");
+            scanf("%d", &aux_codigo);
+            for (int i = 0; i < contador_clientes; i++) {
+                // Caso o CPF/CNPJ seja igual
+                if (strcmp(aux_cpf, clientes[i].cpf) == 0) {
+                    printf("\n========== Cliente =========\n");
+                    printf("Código: %d\n", clientes[i].codigo);
+                    printf("Nome: %s\n", clientes[i].nome);
+                    printf("CPF/CNPJ: %s\n", clientes[i].cpf);
+                    printf("Telefone: %s\n", clientes[i].telefone);
+                    printf("Endereço: %s\n", clientes[i].endereco);
+
+                    printf("\n===== Informações da Conta =====\n");
+                    printf("Agencia: ");
+                    scanf("%d", &aux_agencia);
+                    printf("Conta: ");
+                    scanf("%d", &aux_numero);
+                    for (int j = 0; j < clientes[i].quant_contas; j++) {
+                        if (clientes[i].contas[j].agencia == aux_agencia && clientes[i].contas[j].numero) {
+                            printf("\n** Conta já cadastrada **\n\n");
+                            return 0;
+                        }
+                    }
+
+                    clientes[i].contas[clientes[i].quant_contas].agencia = aux_agencia;
+                    clientes[i].contas[clientes[i].quant_contas].numero = aux_numero;
+                    clientes[i].contas[clientes[i].quant_contas].saldo = 0;
+                    clientes[i].quant_contas++;
+                    return 1;
+                }
+            }
+            break;
+
+        case 0:
+            break;
+        
+        default:
+            printf("\n** Comando inválido digite 1, 2 ou 0 para prosseguir **\n");
+            break;
+    }
+    printf("Cliente não encontrado\n");
+    return 0;
+}
+
 /**
  * Menus de interação
  */
@@ -483,17 +579,35 @@ void menu_gerenciar_cliente() {
 
 // Menu de gestão de contas
 void menu_gerenciar_conta() {
-    printf("============ Gerenciar Contas ============\n");
-    printf("Digite um comando para prosseguir:\n");
-    printf("R – Listagem de todas as contas cadastradas.\n");
-    printf("C – Cadastrar uma conta para um cliente.\n");
-    printf("L – Listar todas as contas de um cliente.\n");
-    printf("W – Realizar um saque em uma conta.\n");
-    printf("D – Realizar um depósito em uma conta.\n");
-    printf("T – Realizar transferência entre contas.\n");
-    printf("E – Exibir extrato de uma conta.\n");
-    printf("S – Sair\n");
-    printf("\nEscolha: ");
+    char opcao;
+    do {
+        printf("\n============ Gerenciar Contas ============\n");
+        printf("Digite um comando para prosseguir:\n");
+        printf("R – Listagem de todas as contas cadastradas.\n");
+        printf("C – Cadastrar uma conta para um cliente.\n");
+        printf("L – Listar todas as contas de um cliente.\n");
+        printf("W – Realizar um saque em uma conta.\n");
+        printf("D – Realizar um depósito em uma conta.\n");
+        printf("T – Realizar transferência entre contas.\n");
+        printf("E – Exibir extrato de uma conta.\n");
+        printf("S – Sair\n");
+        printf("\nEscolha: ");
+        scanf(" %c", &opcao);
+
+        switch (opcao) {
+            case 'C':
+                if (cadastrar_conta()) {
+                    printf("\n** Concluído com sucesso! **\n");
+                    break;
+                }
+                printf("Ops! Algo deu errado");
+                break;
+            
+            default:
+                printf("\n** Comando inválido digite R, C, L, W, D, T, E ou S para prosseguir **\n");
+                break;
+        }
+    } while (opcao != 'S');
 }
 
 // Menu inicial
