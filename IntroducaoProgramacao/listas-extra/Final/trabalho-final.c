@@ -300,6 +300,104 @@ int atualizar_clientes() {
     return 0;
 }
 
+// Função para excluir clientes
+int excluir_clientes() {
+    int opcao;
+    //do {
+        printf("\n============ Excluir Cliente ============\n");
+        printf("Digite um comando para prosseguir:\n");
+        printf("1 – Buscar por código\n");
+        printf("2 – Buscar por CPF/CNPJ\n");
+        printf("0 – Sair\n");
+        printf("\nEscolha: ");
+        scanf("%d", &opcao);
+
+        int aux_codigo;
+        char aux_cpf[TAM_CPF + 1];
+        int confirmacao;
+
+        switch (opcao) {
+            case 1:
+                printf("Informe o código: ");
+                scanf("%d", &aux_codigo);
+                for (int i = 0; i < contador_clientes; i++) {
+                    // Caso o código seja igual
+                    if (aux_codigo == clientes[i].codigo) {
+                        printf("\n========== Cliente =========\n");
+                        printf("Código: %d\n", clientes[i].codigo);
+                        printf("Nome: %s\n", clientes[i].nome);
+                        printf("CPF/CNPJ: %s\n", clientes[i].cpf);
+                        printf("Telefone: %s\n", clientes[i].telefone);
+                        printf("Endereço: %s\n", clientes[i].endereco);
+
+                        printf("\nDeseja realmente excluir?\n");
+                        printf("1 - Sim\n");
+                        printf("2 - Não\n");
+                        printf("Escolha: ");
+                        scanf("%d", &confirmacao);
+                        if (confirmacao == 1) {
+                            for (int j = i; j < contador_clientes; j++) {
+                                clientes[j].codigo = clientes[j+1].codigo;
+                                strcpy(clientes[j].nome, clientes[j+1].nome);
+                                strcpy(clientes[j].cpf, clientes[j+1].cpf);
+                                strcpy(clientes[j].telefone, clientes[j+1].telefone);
+                                strcpy(clientes[j].endereco, clientes[j+1].endereco);
+                            }
+                            contador_clientes--;
+                            printf("\nExcluído com sucesso!\n");
+                            return 1;
+                        }
+                        return -1;
+                    }
+                }
+                break;
+
+            case 2:
+                printf("Informe o CPF/CNPJ: ");
+                scanf("%s", aux_cpf);
+                for (int i = 0; i < contador_clientes; i++) {
+                    // Caso o CPF/CNPJ seja igual
+                    if (strcmp(aux_cpf, clientes[i].cpf) == 0) {
+                        printf("\n========== Cliente =========\n");
+                        printf("Código: %d\n", clientes[i].codigo);
+                        printf("Nome: %s\n", clientes[i].nome);
+                        printf("CPF/CNPJ: %s\n", clientes[i].cpf);
+                        printf("Telefone: %s\n", clientes[i].telefone);
+                        printf("Endereço: %s\n", clientes[i].endereco);
+
+                        printf("\nDeseja realmente excluir?\n");
+                        printf("1 - Sim\n");
+                        printf("2 - Não\n");
+                        printf("Escolha: ");
+                        scanf("%d", &confirmacao);
+                        if (confirmacao == 1) {
+                            for (int j = i; j < contador_clientes; j++) {
+                                clientes[j].codigo = clientes[j+1].codigo;
+                                strcpy(clientes[j].nome, clientes[j+1].nome);
+                                strcpy(clientes[j].cpf, clientes[j+1].cpf);
+                                strcpy(clientes[j].telefone, clientes[j+1].telefone);
+                                strcpy(clientes[j].endereco, clientes[j+1].endereco);
+                            }
+                            contador_clientes--;
+                            printf("\nExcluído com sucesso!\n");
+                            return 1;
+                        }
+                        return -1;
+                    }
+                }
+                break;
+            
+            case 0:
+                break;
+        
+            default:
+                printf("\n** Comando inválido digite 1, 2 ou 0 para prosseguir **\n");
+                break;
+        }
+    //} while (opcao != 0);
+    return 0;
+}
+
 /**
  * Menus de interação
  */
@@ -344,6 +442,16 @@ void menu_gerenciar_cliente() {
 
             case 'A':
                 if (atualizar_clientes()) {
+                    break;
+                }
+                printf("\nCliente não encontrado.\n\n");
+                break;
+
+            case 'E':
+                if (excluir_clientes()) {
+                    break;
+                } else if (excluir_clientes() == -1) {
+                    printf("\nOperação cancelada pelo usuário\n\n");
                     break;
                 }
                 printf("\nCliente não encontrado.\n\n");
