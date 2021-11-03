@@ -565,7 +565,7 @@ int cadastrar_conta() {
                             }
                         }
                     }
-                    //int x = clientes[i].contas[clientes[i].quant_contas].transacoes;
+
                     clientes[i].contas[clientes[i].quant_contas].agencia = aux_agencia;
                     clientes[i].contas[clientes[i].quant_contas].numero = aux_numero;
                     clientes[i].contas[clientes[i].quant_contas].saldo = 0;
@@ -634,6 +634,26 @@ void depositar(double valor, int cliente, int conta) {
     clientes[cliente].contas[conta].quant_transacoes++;    
 }
 
+void sacar(double valor, int cliente, int conta) {
+    if (clientes[cliente].contas[conta].saldo - valor > 0) {
+        clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].tipo = 0;
+        clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].valor = valor;
+        clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].data = time(NULL);
+        
+        /*struct tm tm = *localtime(&clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].data);
+        printf("Data: %d/%d/%d/\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);*/
+        
+        // Solicita a descricao
+        char aux[TAM_MAX_DESCRICAO + 1];
+        scanf("%s", aux);
+        strcpy(clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].descricao, aux);
+        clientes[cliente].contas[conta].quant_transacoes++;
+        clientes[cliente].contas[conta].saldo -= valor;
+    } else {
+        printf("\n** Saldo insuficiente **\n");
+    }
+}
+
 int realizar_transacao(int tipo) {
     int agencia, numero;
     double valor;
@@ -661,6 +681,7 @@ int realizar_transacao(int tipo) {
                 if (tipo == 0) {
                     printf("Valor para o saque: ");
                     scanf("%lf", &valor);
+                    sacar(valor, i, j);
                 }
                 if (tipo == 1) {
                     printf("Valor para o depósito: ");
@@ -783,7 +804,15 @@ void menu_gerenciar_conta() {
                 }
                 printf("Cliente não encontrado");
                 break;
-    
+                
+            case 'W':
+                if (realizar_transacao(1)) {
+                    printf("\n** Concluído com sucesso! **\n");
+                    break;
+                }
+                printf("Conta não encontrada");
+                break;
+                
             case 'D':
                 if (realizar_transacao(1)) {
                     printf("\n** Concluído com sucesso! **\n");
