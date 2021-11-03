@@ -87,11 +87,11 @@ int cadastrar_cliente() {
 }
 
 // Função para listar clientes
-void listar_clientes() {
+void listar_clientes(int contas) {
     int aux_int;
     char aux_string[50] = "";
 
-    // Ordenando o struct
+    // Ordenando o struct de clientes
     for (int i = 0; i < contador_clientes-1; i++) {
         for (int j = 1; j < contador_clientes; j++) {
 
@@ -125,6 +125,35 @@ void listar_clientes() {
         }   
     }
     
+    int aux_agencia;
+    int aux_numero;
+    double aux_saldo;
+    if (contas) {
+        // Ordenando o struct de contas
+        for (int i = 0; i < clientes[i].quant_contas-1; i++) {
+            for (int j = 1; j < clientes[j].quant_contas; j++) {
+
+                // Compara o saldo para saber quem vem antes
+                if (clientes[i].contas[i].saldo < clientes[j].contas[j].saldo) {
+                    // Inverte a posição da agencia
+                    aux_agencia = clientes[j].contas[j].agencia;
+                    clientes[j].contas[j].agencia = clientes[i].contas[i].agencia;
+                    clientes[i].contas[i].saldo = aux_agencia;
+
+                    // Inverte a posição do numero da conta
+                    aux_numero = clientes[j].contas[j].numero;
+                    clientes[j].contas[j].numero = clientes[i].contas[i].numero;
+                    clientes[i].contas[i].saldo = aux_numero;
+
+                    // Inverte a posição do saldo
+                    aux_saldo = clientes[j].contas[j].saldo;
+                    clientes[j].contas[j].saldo = clientes[i].contas[i].saldo;
+                    clientes[i].contas[i].saldo = aux_saldo;
+                }
+            }   
+        }
+    }
+    
     // Imprime a struct na tela
     for (int i = 0; i < contador_clientes; i++) {
         printf("\n========== Cliente %d =========\n", i+1);
@@ -133,6 +162,15 @@ void listar_clientes() {
         printf("CPF/CNPJ: %s\n", clientes[i].cpf);
         printf("Telefone: %s\n", clientes[i].telefone);
         printf("Endereço: %s\n", clientes[i].endereco);
+
+        if (contas) {
+            for (int j = 0; j < clientes[i].quant_contas; j++) {
+                printf("\n----- Conta %d -----\n", j+1);
+                printf("Agencia: %d\n", clientes[i].contas[j].agencia);
+                printf("Conta: %d\n", clientes[i].contas[j].numero);
+                printf("Saldo: %.2lf\n", clientes[i].contas[j].saldo);
+            }            
+        }
     }
 }
 
@@ -537,7 +575,7 @@ void menu_gerenciar_cliente() {
             
             case 'L':
                 if (contador_clientes > 0) {
-                    listar_clientes();
+                    listar_clientes(0);
                     break;
                 }
                 printf("\nNenhum cliente cadastrado.\n\n");
@@ -602,7 +640,11 @@ void menu_gerenciar_conta() {
                 }
                 printf("Ops! Algo deu errado");
                 break;
-            
+
+            case 'L':
+                listar_clientes(1);
+                break;
+
             default:
                 printf("\n** Comando inválido digite R, C, L, W, D, T, E ou S para prosseguir **\n");
                 break;
