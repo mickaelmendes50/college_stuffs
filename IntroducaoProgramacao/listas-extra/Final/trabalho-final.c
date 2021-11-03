@@ -169,13 +169,13 @@ void listar_clientes(int contas) {
                 printf("Agencia: %d\n", clientes[i].contas[j].agencia);
                 printf("Conta: %d\n", clientes[i].contas[j].numero);
                 printf("Saldo: %.2lf\n", clientes[i].contas[j].saldo);
-            }            
+            }
         }
     }
 }
 
 // Função para buscar clientes
-int buscar_clientes() {
+int buscar_clientes(int contas) {
     int opcao;
     //do {
         printf("\n============ Buscar Cliente ============\n");
@@ -204,6 +204,20 @@ int buscar_clientes() {
                         printf("CPF/CNPJ: %s\n", clientes[i].cpf);
                         printf("Telefone: %s\n", clientes[i].telefone);
                         printf("Endereço: %s\n", clientes[i].endereco);
+
+                        if (contas) {
+                            if (clientes[i].quant_contas == 0) {
+                                printf("\nNenhuma conta cadastrada\n");
+                            } else {
+                                for (int j = 0; j < clientes[i].quant_contas; j++) {
+                                    printf("\n----- Conta %d -----\n", j+1);
+                                    printf("Agencia: %d\n", clientes[i].contas[j].agencia);
+                                    printf("Conta: %d\n", clientes[i].contas[j].numero);
+                                    printf("Saldo: %.2lf\n", clientes[i].contas[j].saldo);
+                                }
+                            }
+                        }
+
                         return 1;
                     }
                 }
@@ -221,6 +235,20 @@ int buscar_clientes() {
                         printf("CPF/CNPJ: %s\n", clientes[i].cpf);
                         printf("Telefone: %s\n", clientes[i].telefone);
                         printf("Endereço: %s\n", clientes[i].endereco);
+
+                        if (contas) {
+                            if (clientes[i].quant_contas == 0) {
+                                printf("\nNenhuma conta cadastrada\n");
+                            } else {
+                                for (int j = 0; j < clientes[i].quant_contas; j++) {
+                                    printf("\n----- Conta %d -----\n", j+1);
+                                    printf("Agencia: %d\n", clientes[i].contas[j].agencia);
+                                    printf("Conta: %d\n", clientes[i].contas[j].numero);
+                                    printf("Saldo: %.2lf\n", clientes[i].contas[j].saldo);
+                                }
+                            }
+                        }
+
                         return 1;
                     }
                 }
@@ -238,6 +266,20 @@ int buscar_clientes() {
                         printf("CPF/CNPJ: %s\n", clientes[i].cpf);
                         printf("Telefone: %s\n", clientes[i].telefone);
                         printf("Endereço: %s\n", clientes[i].endereco);
+
+                        if (contas) {
+                            if (clientes[i].quant_contas == 0) {
+                                printf("\nNenhuma conta cadastrada\n");
+                            } else {
+                                for (int j = 0; j < clientes[i].quant_contas; j++) {
+                                    printf("\n----- Conta %d -----\n", j+1);
+                                    printf("Agencia: %d\n", clientes[i].contas[j].agencia);
+                                    printf("Conta: %d\n", clientes[i].contas[j].numero);
+                                    printf("Saldo: %.2lf\n", clientes[i].contas[j].saldo);
+                                }
+                            }
+                        }
+
                         return 1;
                     }
                 }
@@ -582,7 +624,7 @@ void menu_gerenciar_cliente() {
                 break;
             
             case 'B':
-                if (buscar_clientes()) {
+                if (buscar_clientes(0)) {
                     break;
                 }
                 printf("\nCliente não encontrado.\n\n");
@@ -641,8 +683,16 @@ void menu_gerenciar_conta() {
                 printf("Ops! Algo deu errado");
                 break;
 
-            case 'L':
+            case 'R':
                 listar_clientes(1);
+                break;
+
+            case 'L':
+                if (buscar_clientes(1)) {
+                    printf("\n** Concluído com sucesso! **\n");
+                    break;
+                }
+                printf("Cliente não encontrado");
                 break;
 
             default:
