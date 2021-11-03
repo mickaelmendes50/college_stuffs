@@ -89,6 +89,8 @@ int cadastrar_cliente() {
 // Função para listar clientes
 void listar_clientes(int contas) {
     int aux_int;
+    int aux_quant_contas;
+    Conta aux_contas[QUANT_MAX_CONTAS + 1];
     char aux_string[50] = "";
 
     // Ordenando o struct de clientes
@@ -101,6 +103,11 @@ void listar_clientes(int contas) {
                 aux_int = clientes[j].codigo;
                 clientes[j].codigo = clientes[i].codigo;
                 clientes[i].codigo = aux_int;
+                
+                // Inverte a posição da quantidade de contas
+                aux_quant_contas = clientes[j].quant_contas;
+                clientes[j].quant_contas = clientes[i].quant_contas;
+                clientes[i].quant_contas = aux_quant_contas;
 
                 // Inverte a posição do nome
                 strcpy(aux_string, clientes[j].nome);
@@ -121,6 +128,11 @@ void listar_clientes(int contas) {
                 strcpy(aux_string, clientes[j].endereco);
                 strcpy(clientes[j].endereco, clientes[i].endereco);
                 strcpy(clientes[i].endereco, aux_string);
+                
+                // Inverte a posição das contas
+                memcpy(aux_contas, clientes[j].contas, sizeof(Conta) * QUANT_MAX_CONTAS+1);
+                memcpy(clientes[j].contas, clientes[i].contas, sizeof(Conta) * QUANT_MAX_CONTAS+1);
+                memcpy(clientes[i].contas, aux_contas, sizeof(Conta) * QUANT_MAX_CONTAS+1);
             }
         }   
     }
@@ -693,6 +705,9 @@ void menu_gerenciar_conta() {
                     break;
                 }
                 printf("Cliente não encontrado");
+                break;
+    
+            case 'S':
                 break;
 
             default:
