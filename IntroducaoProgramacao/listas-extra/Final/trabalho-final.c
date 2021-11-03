@@ -16,6 +16,7 @@
 /**
  * Tipos de dados 
  */
+ 
 // Cria um novo tipo de dados chamado Trasacao com 
 // as caracteristicas descritas
 typedef struct {
@@ -35,6 +36,7 @@ typedef struct {
     int agencia;
     int numero;
     double saldo;
+    Trasacao transacoes[QUANT_MAX_TRANSACOES + 1];
 } Conta;
 // Vamos definir um contador para auxiliar no
 // cadastro de novas contas, visto que ela não
@@ -554,10 +556,12 @@ int cadastrar_conta() {
                     scanf("%d", &aux_agencia);
                     printf("Conta: ");
                     scanf("%d", &aux_numero);
-                    for (int j = 0; j < clientes[i].quant_contas; j++) {
-                        if (clientes[i].contas[j].agencia == aux_agencia && clientes[i].contas[j].numero) {
-                            printf("\n** Conta já cadastrada **\n\n");
-                            return 0;
+                    for (int k = 0; k < contador_clientes; k++) {
+                        for (int j = 0; j < clientes[k].quant_contas; j++) {
+                            if (clientes[k].contas[j].agencia == aux_agencia && clientes[k].contas[j].numero) {
+                                printf("\n** Conta já cadastrada **\n\n");
+                                return 0;
+                            }
                         }
                     }
 
@@ -612,6 +616,54 @@ int cadastrar_conta() {
             break;
     }
     printf("Cliente não encontrado\n");
+    return 0;
+}
+
+void depositar(double valor, int cliente, int conta) {
+    clientes[cliente].contas[conta].saldo += valor;
+    printf("Novo saldo é de: %.2lf", clientes[cliente].contas[conta].saldo);
+}
+
+int realizar_transacao(int tipo) {
+    int agencia, numero;
+    double valor;
+    printf("\n============= Depositar ===============\n");
+    printf("Agencia: ");
+    scanf("%d", &agencia);
+    printf("Conta: ");
+    scanf("%d", &numero);
+    
+    for(int i = 0; i < contador_clientes; i++) {
+        for(int j = 0; j < clientes[i].quant_contas; j++) {
+            if (agencia == clientes[i].contas[j].agencia && numero == clientes[i].contas[j].numero) {
+                printf("\n========== Cliente =========\n");
+                printf("Código: %d\n", clientes[i].codigo);
+                printf("Nome: %s\n", clientes[i].nome);
+                printf("CPF/CNPJ: %s\n", clientes[i].cpf);
+                printf("Telefone: %s\n", clientes[i].telefone);
+                printf("Endereço: %s\n", clientes[i].endereco);
+
+                printf("\n========== Conta =========\n");
+                printf("Agencia: %d\n", clientes[i].contas[j].agencia);
+                printf("Conta: %d\n", clientes[i].contas[j].numero);
+                
+                printf("\n========== Trasação =========\n");
+                if (tipo == 0) {
+                    printf("Valor para o saque: ");
+                    scanf("%lf", &valor);
+                }
+                if (tipo == 1) {
+                    printf("Valor para o depósito: ");
+                    scanf("%lf", &valor);
+                    depositar(valor, i , j);
+                }
+                if (tipo == 2) {
+                    printf("Valor para a transferência: ");
+                }
+                return 1;
+            }
+        }
+    }
     return 0;
 }
 
@@ -702,16 +754,15 @@ void menu_gerenciar_conta() {
         scanf(" %c", &opcao);
 
         switch (opcao) {
+            case 'R':
+                listar_clientes(1);
+                break;
+
             case 'C':
                 if (cadastrar_conta()) {
                     printf("\n** Concluído com sucesso! **\n");
                     break;
                 }
-                printf("Ops! Algo deu errado");
-                break;
-
-            case 'R':
-                listar_clientes(1);
                 break;
 
             case 'L':
@@ -720,6 +771,14 @@ void menu_gerenciar_conta() {
                     break;
                 }
                 printf("Cliente não encontrado");
+                break;
+    
+            case 'D':
+                if (realizar_transacao(1)) {
+                    printf("\n** Concluído com sucesso! **\n");
+                    break;
+                }
+                printf("Conta não encontrada");
                 break;
     
             case 'S':
