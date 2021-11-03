@@ -676,6 +676,7 @@ int realizar_transacao(int tipo) {
                 printf("\n========== Conta =========\n");
                 printf("Agencia: %d\n", clientes[i].contas[j].agencia);
                 printf("Conta: %d\n", clientes[i].contas[j].numero);
+                printf("Saldo: %.2lf", clientes[i].contas[j].saldo);
                 
                 printf("\n========== Trasação =========\n");
                 if (tipo == 0) {
@@ -689,9 +690,25 @@ int realizar_transacao(int tipo) {
                     depositar(valor, i , j);
                 }
                 if (tipo == 2) {
-                    printf("Valor para a transferência: ");
+                    int dagencia, dnumero;
+                    printf("\n----- Conta de destino -----\n");
+                    printf("Agencia: ");
+                    scanf("%d", &dagencia);
+                    printf("Conta: ");
+                    scanf("%d", &dnumero);
+                    for(int k = 0; k < contador_clientes; k++) {
+                        for(int l = 0; l < clientes[k].quant_contas; l++) {
+                            if (agencia == clientes[k].contas[l].agencia && numero == clientes[k].contas[l].numero) {
+                                printf("Valor para a transferência: ");
+                                scanf("%lf", &valor);
+                                sacar(valor, i, j);
+                                depositar(valor, k, l);
+                                
+                                return 1;
+                            }
+                        }
+                    }
                 }
-                    printf("Novo saldo é de: %.2lf", clientes[i].contas[j].saldo);
                 return 1;
             }
         }
@@ -806,7 +823,7 @@ void menu_gerenciar_conta() {
                 break;
                 
             case 'W':
-                if (realizar_transacao(1)) {
+                if (realizar_transacao(0)) {
                     printf("\n** Concluído com sucesso! **\n");
                     break;
                 }
@@ -820,7 +837,15 @@ void menu_gerenciar_conta() {
                 }
                 printf("Conta não encontrada");
                 break;
-    
+
+            case 'T':
+                if (realizar_transacao(2)) {
+                    printf("\n** Concluído com sucesso! **\n");
+                    break;
+                }
+                printf("Conta não encontrada");
+                break;
+
             case 'S':
                 break;
 
