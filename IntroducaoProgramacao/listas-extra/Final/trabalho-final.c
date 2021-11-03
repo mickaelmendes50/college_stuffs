@@ -10,10 +10,25 @@
 #define TAM_CPF 11
 #define TAM_TELEFONE 15
 #define TAM_MAX_ENDERECO 50
+#define TAM_MAX_DATA 10
+#define TAM_MAX_DESCRICAO 100
 
 /**
  * Tipos de dados 
  */
+// Cria um novo tipo de dados chamado Trasacao com 
+// as caracteristicas descritas
+typedef struct {
+    int tipo; // 0 - debito e 1 - credito
+    double valor;
+    char data[TAM_MAX_DATA + 1];
+    char descricao[TAM_MAX_DESCRICAO + 1];
+} Trasacao;
+// Vamos definir um contador para auxiliar no
+// cadastro de novas transacoes, visto que elas não
+// pode exceder o limite previsto
+int contador_transacoes = 0;
+ 
 // Cria um novo tipo de dados chamado Conta com 
 // as caracteristicas descritas
 typedef struct {
