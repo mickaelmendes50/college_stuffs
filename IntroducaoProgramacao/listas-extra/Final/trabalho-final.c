@@ -77,13 +77,18 @@ int cadastrar_cliente() {
     char telefone[TAM_TELEFONE + 1];
     char endereco[TAM_MAX_ENDERECO + 1];
 
+    if (contador_clientes > QUANT_MAX_CLIENTES) {
+        return 0;
+    }
+    
+
     printf("\n===== Informações =====\n");
     printf("Código: ");
     scanf("%d", &codigo);
     for (int i = 0; i < contador_clientes; i++) {
         if (clientes[i].codigo == codigo) {
             printf("Cliente já cadastrado\n");
-            return 0;
+            return -1;
         }
     }
     printf("Nome: ");
@@ -534,6 +539,10 @@ int cadastrar_conta() {
     int aux_numero;
     char aux_cpf[TAM_CPF + 1];
 
+    if (contador_contas > QUANT_MAX_CONTAS) {
+        return 0;
+    }
+
     printf("\n===== Buscar Cliente =====\n");
     printf("1 - Código\n");
     printf("2 - CPF/CNPJ\n");
@@ -621,7 +630,7 @@ int cadastrar_conta() {
             break;
     }
     printf("Cliente não encontrado\n");
-    return 0;
+    return -1;
 }
 
 void depositar(double valor, int cliente, int conta, int tipo) {
@@ -668,6 +677,11 @@ void sacar(double valor, int cliente, int conta, int tipo) {
 }
 
 int realizar_transacao(int tipo) {
+    if (contador_transacoes > QUANT_MAX_TRANSACOES) {
+        printf("\n** Limite Máximo de Transações Atingido **\n\n");
+        return -1;
+    }
+
     int agencia, numero;
     double valor;
     printf("\n============= Depositar ===============\n");
@@ -784,7 +798,7 @@ void menu_gerenciar_cliente() {
                     printf("\nCadastro concluído com sucesso\n\n");
                     break;
                 }
-                printf("\nOps! Algo deu errado\n\n");
+                printf("\n ** Limite Máximo de Clientes Atingido **\n\n");
                 break;
             
             case 'L':
@@ -856,6 +870,7 @@ void menu_gerenciar_conta() {
                     printf("\n** Concluído com sucesso! **\n");
                     break;
                 }
+                printf("\n** Limite Máximo de Contas Atingido **\n");
                 break;
 
             case 'L':
