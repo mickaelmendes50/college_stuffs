@@ -714,6 +714,7 @@ void sacar(double valor, int cliente, int conta, int tipo) {
         // Solicita a descricao
         } else {
             char aux[TAM_MAX_DESCRICAO + 1];
+            printf("Descrição: ");
             scanf("%s", aux);
             strcpy(transacoes[contador_transacoes].descricao, aux);
         }
@@ -814,7 +815,7 @@ int emitir_extrato() {
     // Percorre o vetor, se os numeros da conta coincidirem,
     // imprime na tela
     int contador = 0;
-    for (int i = 0; i < contador_transacoes; i++) {
+    for (int i = contador_transacoes; i >= 0; i--) {
         if (transacoes[i].agencia == aux_agencia && transacoes[i].numero == aux_numero) {
             contador++;
             printf("\n------ Transação %d ------\n", contador);
@@ -829,10 +830,11 @@ int emitir_extrato() {
             printf("Data: %d/%d/%d/\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
 
             printf("Descrição: %s\n", transacoes[i].descricao);
-            return 1;
         }
+    } 
+    if (contador) {
+        return 1;
     }
-
     return 0;
 }
 
