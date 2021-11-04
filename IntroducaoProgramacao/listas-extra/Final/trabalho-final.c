@@ -24,10 +24,13 @@ typedef struct {
     double valor;
     time_t data;
     char descricao[TAM_MAX_DESCRICAO + 1];
+    int agencia;
+    int numero;
 } Trasacao;
 // Vamos definir um contador para auxiliar no
 // cadastro de novas transacoes, visto que elas não
 // pode exceder o limite previsto
+Trasacao transacoes[QUANT_MAX_TRANSACOES + 1];
 int contador_transacoes = 0;
  
 // Cria um novo tipo de dados chamado Conta com 
@@ -37,7 +40,7 @@ typedef struct {
     int numero;
     double saldo;
     int quant_transacoes;
-    Trasacao transacoes[QUANT_MAX_TRANSACOES + 1];
+    //Trasacao transacoes[QUANT_MAX_TRANSACOES + 1];
 } Conta;
 // Vamos definir um contador para auxiliar no
 // cadastro de novas contas, visto que ela não
@@ -622,38 +625,40 @@ int cadastrar_conta() {
 }
 
 void depositar(double valor, int cliente, int conta, int tipo) {
-    clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].tipo = 1;
-    clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].valor = valor;
-    clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].data = time(NULL);
+    transacoes[contador_transacoes].tipo = 1;
+    transacoes[contador_transacoes].valor = valor;
+    transacoes[contador_transacoes].data = time(NULL);
     
     /*struct tm tm = *localtime(&clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].data);
     printf("Data: %d/%d/%d/\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);*/
 
     if (tipo == 2) {
-        strcpy(clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].descricao, "Transferência de conta: {agência}-{conta}");
+        strcpy(transacoes[contador_transacoes].descricao, "Transferência de conta: {agência}-{conta}");
     } else {
-        strcpy(clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].descricao, "DEPOSITO");
+        strcpy(transacoes[contador_transacoes].descricao, "DEPOSITO");
     }
+    transacoes[contador_transacoes].agencia = clientes[cliente].contas[conta].agencia;
+    transacoes[contador_transacoes].numero = clientes[cliente].contas[conta].numero;
     clientes[cliente].contas[conta].saldo += valor;
     clientes[cliente].contas[conta].quant_transacoes++;    
 }
 
 void sacar(double valor, int cliente, int conta, int tipo) {
     if (clientes[cliente].contas[conta].saldo - valor > 0) {
-        clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].tipo = 0;
-        clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].valor = valor;
-        clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].data = time(NULL);
+        transacoes[contador_transacoes].tipo = 1;
+        transacoes[contador_transacoes].valor = valor;
+        transacoes[contador_transacoes].data = time(NULL);
         
         /*struct tm tm = *localtime(&clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].data);
         printf("Data: %d/%d/%d/\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);*/
         
         if (tipo == 2) {
-            strcpy(clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].descricao, "Transferência para conta: {agência}-{conta}");
+            strcpy(transacoes[contador_transacoes].descricao, "Transferência para conta: {agência}-{conta}");
         // Solicita a descricao
         } else {
             char aux[TAM_MAX_DESCRICAO + 1];
             scanf("%s", aux);
-            strcpy(clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].descricao, aux);
+            strcpy(transacoes[contador_transacoes].descricao, aux);
         }
 
         clientes[cliente].contas[conta].quant_transacoes++;
