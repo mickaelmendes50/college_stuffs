@@ -628,19 +628,18 @@ void depositar(double valor, int cliente, int conta, int tipo) {
     transacoes[contador_transacoes].tipo = 1;
     transacoes[contador_transacoes].valor = valor;
     transacoes[contador_transacoes].data = time(NULL);
-    
-    /*struct tm tm = *localtime(&clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].data);
-    printf("Data: %d/%d/%d/\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);*/
 
     if (tipo == 2) {
         strcpy(transacoes[contador_transacoes].descricao, "Transferência de conta: {agência}-{conta}");
     } else {
         strcpy(transacoes[contador_transacoes].descricao, "DEPOSITO");
     }
+
     transacoes[contador_transacoes].agencia = clientes[cliente].contas[conta].agencia;
     transacoes[contador_transacoes].numero = clientes[cliente].contas[conta].numero;
     clientes[cliente].contas[conta].saldo += valor;
-    clientes[cliente].contas[conta].quant_transacoes++;    
+    clientes[cliente].contas[conta].quant_transacoes++;
+    contador_transacoes++;
 }
 
 void sacar(double valor, int cliente, int conta, int tipo) {
@@ -648,9 +647,6 @@ void sacar(double valor, int cliente, int conta, int tipo) {
         transacoes[contador_transacoes].tipo = 1;
         transacoes[contador_transacoes].valor = valor;
         transacoes[contador_transacoes].data = time(NULL);
-        
-        /*struct tm tm = *localtime(&clientes[cliente].contas[conta].transacoes[clientes[cliente].contas[conta].quant_transacoes+1].data);
-        printf("Data: %d/%d/%d/\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);*/
         
         if (tipo == 2) {
             strcpy(transacoes[contador_transacoes].descricao, "Transferência para conta: {agência}-{conta}");
@@ -661,8 +657,11 @@ void sacar(double valor, int cliente, int conta, int tipo) {
             strcpy(transacoes[contador_transacoes].descricao, aux);
         }
 
+        transacoes[contador_transacoes].agencia = clientes[cliente].contas[conta].agencia;
+        transacoes[contador_transacoes].numero = clientes[cliente].contas[conta].numero;
         clientes[cliente].contas[conta].quant_transacoes++;
         clientes[cliente].contas[conta].saldo -= valor;
+        contador_transacoes++;
     } else {
         printf("\n** Saldo insuficiente **\n");
     }
@@ -727,6 +726,37 @@ int realizar_transacao(int tipo) {
             }
         }
     }
+    return 0;
+}
+
+int emitir_extrato() {
+    int aux_agencia, aux_numero;
+    printf("\n============ Emitir extrato ============\n");
+    printf("Agencia: ");
+    scanf("%d", &aux_agencia);
+    printf("Conta: ");
+    scanf("%d", &aux_numero);
+
+    int contador = 0;
+    for (int i = 0; i < contador_transacoes; i++) {
+        if (transacoes[i].agencia == aux_agencia && transacoes[i].numero == aux_numero) {
+            contador++;
+            printf("\n------ Transação %d ------\n", contador);
+            if (transacoes[i].tipo == 0)
+                printf("Tipo: DEBITO\n");
+            if (transacoes[i].tipo == 1)
+                printf("Tipo: CREDITO\n");
+            
+            printf("Valor: %.2lf\n", transacoes[i].valor);
+
+            struct tm tm = *localtime(&transacoes[i].data);
+            printf("Data: %d/%d/%d/\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+
+            printf("Descrição: %s\n", transacoes[i].descricao);
+            return 1;
+        }
+    }
+
     return 0;
 }
 
@@ -854,6 +884,14 @@ void menu_gerenciar_conta() {
 
             case 'T':
                 if (realizar_transacao(2)) {
+                    printf("\n** Concluído com sucesso! **\n");
+                    break;
+                }
+                printf("Conta não encontrada");
+                break;
+
+            case 'E':
+                if (emitir_extrato()) {
                     printf("\n** Concluído com sucesso! **\n");
                     break;
                 }
