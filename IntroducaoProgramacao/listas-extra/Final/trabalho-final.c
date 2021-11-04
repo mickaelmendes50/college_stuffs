@@ -701,7 +701,7 @@ void depositar(double valor, int cliente, int conta, int tipo) {
 // A função recebe o valor a ser depositado,
 // a posição do cliente e da conta em seus devidos vetores
 // e o tipo de transação (para o caso de ser transferencia)
-void sacar(double valor, int cliente, int conta, int tipo) {
+int sacar(double valor, int cliente, int conta, int tipo) {
     // Verifica se o saldo na conta é suficiente pra realizar o saque
     if (clientes[cliente].contas[conta].saldo - valor > 0) {
         transacoes[contador_transacoes].tipo = 1;
@@ -724,8 +724,10 @@ void sacar(double valor, int cliente, int conta, int tipo) {
         clientes[cliente].contas[conta].quant_transacoes++;
         clientes[cliente].contas[conta].saldo -= valor;
         contador_transacoes++;
+        return 1;
     } else {
         printf("\n** Saldo insuficiente **\n");
+        return 0;
     }
 }
 
@@ -739,7 +741,7 @@ int realizar_transacao(int tipo) {
 
     int agencia, numero;
     double valor;
-    printf("\n============= Depositar ===============\n");
+    printf("\n=========== Informações da Conta ===========\n");
     printf("Agencia: ");
     scanf("%d", &agencia);
     printf("Conta: ");
@@ -784,12 +786,12 @@ int realizar_transacao(int tipo) {
                     // Verifica se a conta destino existe
                     for(int k = 0; k < contador_clientes; k++) {
                         for(int l = 0; l < clientes[k].quant_contas; l++) {
-                            if (agencia == clientes[k].contas[l].agencia && numero == clientes[k].contas[l].numero) {
+                            if (dagencia == clientes[k].contas[l].agencia && dnumero == clientes[k].contas[l].numero) {
                                 printf("Valor para a transferência: ");
                                 scanf("%lf", &valor);
-                                sacar(valor, i, j, 2);
-                                depositar(valor, k, l, 2);
-                                
+                                if (sacar(valor, i, j, 2)) {
+                                    depositar(valor, k, l, 2);
+                                }
                                 return 1;
                             }
                         }
