@@ -1,8 +1,18 @@
+/**
+ * Trabalho final da matéria Introdução à Computação
+ * 
+ * Alunos: Enzo Aurelio Baruff de Brito e Cunha - 201503493
+ *         Marcelo Bezerra dos Santos - 202006821
+ *         Patrick Paulo Norberto - 201802850
+ *         Pedro Peñalba Machado - 202003320
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
+// Definindo constantes coforme orientações do documento
 #define QUANT_MAX_CLIENTES 100
 #define QUANT_MAX_CONTAS 200
 #define QUANT_MAX_TRANSACOES 1000
@@ -77,14 +87,18 @@ int cadastrar_cliente() {
     char telefone[TAM_TELEFONE + 1];
     char endereco[TAM_MAX_ENDERECO + 1];
 
+    // Se atingir o limite máximo de clientes,
+    // cancela o cadastro.
     if (contador_clientes > QUANT_MAX_CLIENTES) {
         return 0;
     }
     
-
+    // Coletando informações do cliente
     printf("\n===== Informações =====\n");
     printf("Código: ");
     scanf("%d", &codigo);
+    // Verifica se o código já existe,
+    // Se sim, retorna um erro.
     for (int i = 0; i < contador_clientes; i++) {
         if (clientes[i].codigo == codigo) {
             printf("Cliente já cadastrado\n");
@@ -100,6 +114,7 @@ int cadastrar_cliente() {
     printf("Endereço: ");
     scanf("%s", endereco);
 
+    // Fazendo devidas atribuições
     clientes[contador_clientes].codigo = codigo;
     clientes[contador_clientes].quant_contas = 0;
     strcpy(clientes[contador_clientes].nome, nome);
@@ -107,19 +122,23 @@ int cadastrar_cliente() {
     strcpy(clientes[contador_clientes].telefone, telefone);
     strcpy(clientes[contador_clientes].endereco, endereco);
 
-    // Incrementa o número de clientes
+    // Incrementa o número do controlador de
+    // quantidade de clientes
     contador_clientes++;
     return 1;
 }
 
 // Função para listar clientes
+// Recebe o paramentro 'contas' para saber se deve
+// ou não apresentar as iformações de contas
 void listar_clientes(int contas) {
     int aux_int;
     int aux_quant_contas;
     Conta aux_contas[QUANT_MAX_CONTAS + 1];
     char aux_string[50] = "";
 
-    // Ordenando o struct de clientes
+    // Ordenando o struct de clientes em ordem alfabética
+    // conforme orientado no documento
     for (int i = 0; i < contador_clientes-1; i++) {
         for (int j = 1; j < contador_clientes; j++) {
 
@@ -167,25 +186,26 @@ void listar_clientes(int contas) {
     int aux_numero;
     double aux_saldo;
     if (contas) {
-        // Ordenando o struct de contas
+        // Ordenando o struct de contas segundo o saldo
+        // em ordem decrescente, conforme orientado no doc
         for (int i = 0; i < clientes[i].quant_contas-1; i++) {
             for (int j = 1; j < clientes[j].quant_contas; j++) {
 
                 // Compara o saldo para saber quem vem antes
-                if (clientes[i].contas[i].saldo < clientes[j].contas[j].saldo) {
+                if (clientes[i].contas[i].saldo < clientes[i].contas[j].saldo) {
                     // Inverte a posição da agencia
-                    aux_agencia = clientes[j].contas[j].agencia;
-                    clientes[j].contas[j].agencia = clientes[i].contas[i].agencia;
+                    aux_agencia = clientes[i].contas[j].agencia;
+                    clientes[i].contas[j].agencia = clientes[i].contas[i].agencia;
                     clientes[i].contas[i].saldo = aux_agencia;
 
                     // Inverte a posição do numero da conta
-                    aux_numero = clientes[j].contas[j].numero;
-                    clientes[j].contas[j].numero = clientes[i].contas[i].numero;
+                    aux_numero = clientes[i].contas[j].numero;
+                    clientes[i].contas[j].numero = clientes[i].contas[i].numero;
                     clientes[i].contas[i].saldo = aux_numero;
 
                     // Inverte a posição do saldo
-                    aux_saldo = clientes[j].contas[j].saldo;
-                    clientes[j].contas[j].saldo = clientes[i].contas[i].saldo;
+                    aux_saldo = clientes[i].contas[j].saldo;
+                    clientes[i].contas[j].saldo = clientes[i].contas[i].saldo;
                     clientes[i].contas[i].saldo = aux_saldo;
                 }
             }   
@@ -213,6 +233,8 @@ void listar_clientes(int contas) {
 }
 
 // Função para buscar clientes
+// Recebe o paramentro 'contas' para saber se deve
+// ou não apresentar as iformações de contas
 int buscar_clientes(int contas) {
     int opcao;
     //do {
@@ -378,6 +400,7 @@ int atualizar_clientes() {
                         printf("Endereço: ");
                         scanf("%s", aux_endereco);
 
+                        // Sobrescreve os dados dos cliente
                         clientes[i].codigo = aux_codigo;
                         strcpy(clientes[i].nome, aux_nome);
                         strcpy(clientes[i].cpf, aux_cpf);
@@ -413,6 +436,7 @@ int atualizar_clientes() {
                         printf("Endereço: ");
                         scanf("%s", aux_endereco);
 
+                        // Sobrescreve os dados dos cliente
                         clientes[i].codigo = aux_codigo;
                         strcpy(clientes[i].nome, aux_nome);
                         strcpy(clientes[i].cpf, aux_cpf);
@@ -469,6 +493,9 @@ int excluir_clientes() {
                         printf("2 - Não\n");
                         printf("Escolha: ");
                         scanf("%d", &confirmacao);
+
+                        // Se o cliente corfirmar, ordena o struct para 
+                        // remover o espaço vazio
                         if (confirmacao == 1) {
                             for (int j = i; j < contador_clientes; j++) {
                                 clientes[j].codigo = clientes[j+1].codigo;
@@ -504,6 +531,9 @@ int excluir_clientes() {
                         printf("2 - Não\n");
                         printf("Escolha: ");
                         scanf("%d", &confirmacao);
+
+                        // Se o cliente corfirmar, ordena o struct para 
+                        // remover o espaço vazio
                         if (confirmacao == 1) {
                             for (int j = i; j < contador_clientes; j++) {
                                 clientes[j].codigo = clientes[j+1].codigo;
@@ -532,13 +562,16 @@ int excluir_clientes() {
     return 0;
 }
 
+// Função para cadastrar novas contas em um cliente
 int cadastrar_conta() {
     int opcao;
     int aux_codigo;
     int aux_agencia;
     int aux_numero;
     char aux_cpf[TAM_CPF + 1];
-
+    
+    // Se a quantidade máxima de cadastro de contas já
+    // tiver sido atingida, não permita criar uma nova
     if (contador_contas > QUANT_MAX_CONTAS) {
         return 0;
     }
@@ -569,6 +602,8 @@ int cadastrar_conta() {
                     scanf("%d", &aux_agencia);
                     printf("Conta: ");
                     scanf("%d", &aux_numero);
+
+                    // Verifica se a conta já não existe
                     for (int k = 0; k < contador_clientes; k++) {
                         for (int j = 0; j < clientes[k].quant_contas; j++) {
                             if (clientes[k].contas[j].agencia == aux_agencia && clientes[k].contas[j].numero) {
@@ -578,6 +613,7 @@ int cadastrar_conta() {
                         }
                     }
 
+                    // Faz as devidas atribuições na struct conta pertencente ao cliente
                     clientes[i].contas[clientes[i].quant_contas].agencia = aux_agencia;
                     clientes[i].contas[clientes[i].quant_contas].numero = aux_numero;
                     clientes[i].contas[clientes[i].quant_contas].saldo = 0;
@@ -606,13 +642,18 @@ int cadastrar_conta() {
                     scanf("%d", &aux_agencia);
                     printf("Conta: ");
                     scanf("%d", &aux_numero);
-                    for (int j = 0; j < clientes[i].quant_contas; j++) {
-                        if (clientes[i].contas[j].agencia == aux_agencia && clientes[i].contas[j].numero) {
-                            printf("\n** Conta já cadastrada **\n\n");
-                            return 0;
+
+                    // Verifica se a conta já não existe
+                    for (int k = 0; k < contador_clientes; k++) {
+                        for (int j = 0; j < clientes[k].quant_contas; j++) {
+                            if (clientes[k].contas[j].agencia == aux_agencia && clientes[k].contas[j].numero) {
+                                printf("\n** Conta já cadastrada **\n\n");
+                                return 0;
+                            }
                         }
                     }
 
+                    // Faz as devidas atribuições na struct conta pertencente ao cliente
                     clientes[i].contas[clientes[i].quant_contas].agencia = aux_agencia;
                     clientes[i].contas[clientes[i].quant_contas].numero = aux_numero;
                     clientes[i].contas[clientes[i].quant_contas].saldo = 0;
@@ -633,11 +674,16 @@ int cadastrar_conta() {
     return -1;
 }
 
+// Função de depósito | CRÉDITO
+// A função recebe o valor a ser depositado,
+// a posição do cliente e da conta em seus devidos vetores
+// e o tipo de transação (para o caso de ser transferencia)
 void depositar(double valor, int cliente, int conta, int tipo) {
     transacoes[contador_transacoes].tipo = 1;
     transacoes[contador_transacoes].valor = valor;
     transacoes[contador_transacoes].data = time(NULL);
 
+    // Se for uma transferência, utiliza a descrição padrão do doc
     if (tipo == 2) {
         strcpy(transacoes[contador_transacoes].descricao, "Transferência de conta: {agência}-{conta}");
     } else {
@@ -651,12 +697,18 @@ void depositar(double valor, int cliente, int conta, int tipo) {
     contador_transacoes++;
 }
 
+// Função de saque | DÉBITO
+// A função recebe o valor a ser depositado,
+// a posição do cliente e da conta em seus devidos vetores
+// e o tipo de transação (para o caso de ser transferencia)
 void sacar(double valor, int cliente, int conta, int tipo) {
+    // Verifica se o saldo na conta é suficiente pra realizar o saque
     if (clientes[cliente].contas[conta].saldo - valor > 0) {
         transacoes[contador_transacoes].tipo = 1;
         transacoes[contador_transacoes].valor = valor;
         transacoes[contador_transacoes].data = time(NULL);
         
+        // Se for uma transferência, utiliza a descrição padrão do doc
         if (tipo == 2) {
             strcpy(transacoes[contador_transacoes].descricao, "Transferência para conta: {agência}-{conta}");
         // Solicita a descricao
@@ -677,6 +729,8 @@ void sacar(double valor, int cliente, int conta, int tipo) {
 }
 
 int realizar_transacao(int tipo) {
+    // Se a quantidade máxima de transações for atingida
+    // não permita criar uma nova
     if (contador_transacoes > QUANT_MAX_TRANSACOES) {
         printf("\n** Limite Máximo de Transações Atingido **\n\n");
         return -1;
@@ -690,6 +744,7 @@ int realizar_transacao(int tipo) {
     printf("Conta: ");
     scanf("%d", &numero);
     
+    // Verifica se a conta existe
     for(int i = 0; i < contador_clientes; i++) {
         for(int j = 0; j < clientes[i].quant_contas; j++) {
             if (agencia == clientes[i].contas[j].agencia && numero == clientes[i].contas[j].numero) {
@@ -705,6 +760,7 @@ int realizar_transacao(int tipo) {
                 printf("Conta: %d\n", clientes[i].contas[j].numero);
                 printf("Saldo: %.2lf", clientes[i].contas[j].saldo);
                 
+                // Para cada tipo de transação, chame sua função específica
                 printf("\n========== Trasação =========\n");
                 if (tipo == 0) {
                     printf("Valor para o saque: ");
@@ -723,6 +779,8 @@ int realizar_transacao(int tipo) {
                     scanf("%d", &dagencia);
                     printf("Conta: ");
                     scanf("%d", &dnumero);
+
+                    // Verifica se a conta destino existe
                     for(int k = 0; k < contador_clientes; k++) {
                         for(int l = 0; l < clientes[k].quant_contas; l++) {
                             if (agencia == clientes[k].contas[l].agencia && numero == clientes[k].contas[l].numero) {
@@ -743,6 +801,8 @@ int realizar_transacao(int tipo) {
     return 0;
 }
 
+
+// Função para emitir extrato
 int emitir_extrato() {
     int aux_agencia, aux_numero;
     printf("\n============ Emitir extrato ============\n");
@@ -751,6 +811,8 @@ int emitir_extrato() {
     printf("Conta: ");
     scanf("%d", &aux_numero);
 
+    // Percorre o vetor, se os numeros da conta coincidirem,
+    // imprime na tela
     int contador = 0;
     for (int i = 0; i < contador_transacoes; i++) {
         if (transacoes[i].agencia == aux_agencia && transacoes[i].numero == aux_numero) {
@@ -951,7 +1013,7 @@ void menu_principal() {
     printf("\nAté mais!\n");
 }
 
-int main(int argc, char const *argv[]) {
+int main() {
 
     menu_principal();
     return 0;
