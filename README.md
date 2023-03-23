@@ -12,3 +12,7 @@
 - Curso básico de ReactJS + Redux (Udemy)
 - Curso de JavaScript Ninja (Udemy)
 - Prolog
+- Sistemas Distribuidos
+- Sistemas Operacionais
+- Software Básico
+- Tópicos em Bancos de Dados
