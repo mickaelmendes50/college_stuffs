@@ -1,0 +1,170 @@
+.formulario-envio-email{
+
+    position: relative;
+    height: 380px;
+    width: 50vw;
+    left: 25vw;
+    top: 40px;
+
+}
+
+.form-envio-email{
+
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    top: 40%;
+
+}
+
+.button-email{
+
+    position: absolute;
+    top: 85%;
+    width: 80%;
+    left: 10%;
+
+}
+
+.link-curador-login{
+
+    position: absolute;
+    justify-items: center;
+    justify-content: center;
+    width: 40%;
+    text-align: center;
+    top: 55%;
+    left: 30%;
+
+}
+
+.img-email-form{
+
+    position: absolute;
+    height: 40%;
+    width: 20%;
+    left: 40%;
+
+}
+
+.formulario-login{
+
+    position: relative;
+    width: 50vw;
+    height: 380px;
+    left: 25vw;
+    top: 40px;
+
+}
+
+.form-login{
+
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    top: 40%;
+
+}
+
+.img-login-form{
+
+    position: absolute;
+    height: 40%;
+    width: 20%;
+    left: 40%;
+
+}
+
+.campo-email{
+
+    position: absolute;
+    width: 50%;
+    left: 25%;
+
+}
+
+.campo-senha{
+
+    position: absolute;
+    width: 50%;
+    left: 25%;
+    top: 30%;
+
+}
+
+.button-login{
+
+    position: absolute;
+    width: 30%;
+    left: 35%;
+    top: 85%;
+
+}
+
+.area_trabalho_curador{
+	
+	position: relative;
+	width: 60vw;
+	height: 80vh;
+	left: 20vw;
+	top: 20px;
+	
+}
+
+.img_curador{
+	
+	position: absolute;
+	height: 20%;
+	width: 10%;
+	left: 47.5%;
+    top: 0px;
+	
+}
+
+.formulario_curador{
+	
+	position: absolute;
+	top: 20%;
+    height: 100%;
+    width: 100%;
+	
+}
+
+.botao_envio_email{
+
+    position: absolute;
+    top: 50%;
+    width: 30%;
+    left: 35%;
+    
+}
+
+.mensagem-pos-acao{
+
+    position: relative;
+    width: 75%;
+    left: 12.5%;
+    top: 10px;
+
+}
+
+.agradecimento{
+
+    position: relative;
+    width: 70vw;
+    top: 100px;
+    border-radius: 10px;
+    background-color: rgba(46, 139, 87, 0.8);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    left: 15vw;
+
+}
+
+.agradecimento p{
+
+    font-size: 1.5rem;
+    color: #fff;
+
+}

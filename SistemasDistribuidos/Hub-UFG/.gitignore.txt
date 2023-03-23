@@ -1,0 +1,4 @@
+#Ignora o arquivo File Stream
+.ini
+.GitHub.com
+Credentials.txt
