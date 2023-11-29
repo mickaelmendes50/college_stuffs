@@ -8,6 +8,7 @@
 - Análise e Projeto de Algoritmos
 - Banco de Dados 1 (Tópicos em Bancos de Dados)
 - Banco de Dados 2
+- Compiladores
 - Curso básico de Java (Udemy)
 - Programação Orientada a Objetos
 - Curso básico de ReactJS + Redux (Udemy)
